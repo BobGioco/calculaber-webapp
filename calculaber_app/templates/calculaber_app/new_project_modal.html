@@ -1,0 +1,24 @@
+<div class="modal fade" id="NewProject" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">Nový projekt</h5>
+
+      </div>
+      <form method="post" enctype="multipart/form-data">{% csrf_token %}
+        <div class="modal-body">
+          <p>Název {{ form.name }}</p>
+          <p>Logo {{ form.project_pic }}</p>
+        </div>
+
+
+
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-dismiss="modal">Zavřít</button>
+          <input type="submit" class="btn btn-primary" value="Začít projekt">
+
+        </div>
+      </form>
+    </div>
+  </div>
+</div>

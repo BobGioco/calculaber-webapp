@@ -1,0 +1,15 @@
+{% extends "calculaber_app/base.html" %}
+{% block body_block %}
+
+<div class="jumbotron">
+  <h3>Úprava materiálu</h3>
+  <br>
+  <form method="post">{% csrf_token %}
+      <p>Název {{ form.name }}</p>
+      <p>Margin {{ form.margin }}</p>
+      <p>Cena {{ form.price }}</p>
+      <p>Jednotky {{ form.units }}</p>
+      <input type="submit" value="Uložit">
+  </form>
+</div>
+{% endblock %}

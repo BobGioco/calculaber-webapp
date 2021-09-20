@@ -1,0 +1,36 @@
+{% extends "calculaber_app/base.html" %}
+{% block body_block %}
+
+<div class="jumbotron">
+  <h1>{{ project.name }}</h1>
+  <h4>{{ project.create_date }}</h4>
+  <a href="{% url 'project_update' pk=project.id %}" class="btn btn-info" role="button">Upravit</a>
+  <a href="{% url 'project_delete' pk=project.id %}" class="btn btn-danger" role="button">Smazat</a>
+
+</div>
+
+  <div class="container-fluid">
+    <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#NewObject">
+      Nový objekt
+    </button>
+    <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#DuplicateObject">
+      Duplikovat objekt
+    </button>
+  </div>
+  <div class="container-fluid">
+    {% for object in project_detail %}
+      <div class="card" style="width: 18rem;">
+        <div class="card-body">
+          <h5 class="card-title">{{object.name}}</h5>
+          <p class="card-text">{{object.create_date}}</p>
+          <a href="{% url 'object_detail' pk1=project.id pk2=object.pk %}" class="btn btn-primary stretched-link">Detail</a>
+        </div>
+      </div>
+      {% endfor %}
+    </div>
+
+
+{% include "calculaber_app/new_object_modal.html" %}
+{% include "calculaber_app/duplicate_object_modal.html" %}
+
+{% endblock %}

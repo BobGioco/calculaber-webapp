@@ -1,0 +1,16 @@
+{% extends "calculaber_app/base.html" %}
+{% block body_block %}
+
+<br>
+<div class="jumbotron">
+<form method="post">
+  {% csrf_token %}
+  <h2>{{ object.name }}</h2>
+  <h4>Jste si jistý, že chcete projekt smazat?</h4>
+  <br>
+  <input type="submit" value="Smazat" class="btn btn-outline-danger btn-lg">
+  <a class="btn btn-secondary btn-lg" href="{% url 'project_detail' pk=object.pk %}">Zavřít</a><!-- {% url 'calculaber_app:index' %} -->
+</form>
+</div>
+
+{% endblock %}

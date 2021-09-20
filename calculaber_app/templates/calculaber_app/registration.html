@@ -1,0 +1,17 @@
+{% extends "calculaber_app/base.html" %}
+{% load static %}<!-- not needed here-->
+{% block body_block %}
+<div class="jumbotron">
+  {% if registered %}
+    <h1>Děkujeme za registraci!</h1>
+  {% else %}
+    <h1>Registrace!</h1>
+    <h3>Vyplňte formulář:</h3>
+    <form method="post" enctype="multipart/form-data">
+      {% csrf_token %}
+      {{ user_form.as_p }}
+      <input type="submit" name="" value="register">
+    </form>
+  {% endif %}
+</div>
+{% endblock %}

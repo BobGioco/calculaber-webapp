@@ -1,0 +1,13 @@
+{% extends "calculaber_app/base.html" %}
+{% block body_block %}
+
+<div class="jumbotron">
+  <h2>Upravit projekt</h2>
+  <br>
+  <form method="post">{% csrf_token %}
+      <p>Název {{ form.name }}</p>
+      <p>Logo {{ form.project_pic }}</p>
+      <input type="submit" value="Uložit">
+  </form>
+</div>
+{% endblock %}

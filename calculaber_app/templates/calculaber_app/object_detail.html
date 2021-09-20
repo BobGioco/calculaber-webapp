@@ -1,0 +1,59 @@
+{% extends "calculaber_app/base.html" %}
+{% block body_block %}
+
+<div class="jumbotron">
+  <h2>{{ object_info.name }}</h2>
+  <a href="{% url 'object_update' pk=object_info.id %}" class="btn btn-info" role="button">Upravit</a>
+  <a href="{% url 'object_delete' pk=object_info.id %}" class="btn btn-danger" role="button">Smazat</a>
+</div>
+<table class="table">
+  <thead>
+    <tr>
+      <th scope="col">Díl</th>
+      <th scope="col">Množství</th>
+      <th scope="col">Materiál</th>
+      <th scope="col">Cena materiálu</th>
+      <th scope="col">Jednotky</th>
+      <th scope="col">Finální cena</th>
+      <th></th>
+    </tr>
+  </thead>
+  <tbody>
+    {% for material in material_object %}
+    <tr>
+      <form method="POST" enctype="multipart/form-data">{% csrf_token %}
+        <input class="form-control" id="pk-{{material.pk}}" name='materialobject_pk' type="text" value="" style="display: none;">
+        <td>
+          <p id="p_name-{{material.pk}}">{{material.name}}</p>
+          <input class="form-control form-control-sm" id="input_name-{{material.pk}}" name='materiaobject_name' type="text" value="" style="display: none;">
+        </td>
+        <td>
+          <p id="p_amount-{{material.pk}}">{{material.amount}}</p>
+          <input class="form-control form-control-sm" id="input_amount-{{material.pk}}" name='materiaobject_amount' type="number" value="" style="display: none;">
+        </td>
+        <td>{{material.material.name}}</td>
+        <td>{{material.material.price}} CZK</td>
+        <td>{{material.material.get_units_display}}</td>
+        <td>{% widthratio material.amount 1 material.material.price %}</td>
+        <td>
+          <!-- <a href="" role="button" class="btn btn-info" id="done-{{material.pk}}" style="display: none;">Done</a> -->
+          <input type="submit" id="done-{{material.pk}}" name="update_material_object_sub" class="btn btn-info" style="display: none;" value="Uložit">
+          <button type="button" class="btn btn-danger" id="close_item-{{material.pk}}" style="display: none;">Zavřít</button>
+          <button type="button" class="btn btn-info" id="edit_item-{{material.pk}}">Upravit</button>
+          <form method="POST" action="{% url 'material_object_delete' pk=material.pk %}">
+             {% csrf_token %}<input class="btn btn-danger" id="delete_item-{{material.pk}}" type="submit" onclick="return confirm('Jste si jistí, že chcete materiál odebrat?')" value="Smazat">
+          </form>
+        </td>
+
+      </form>
+    </tr>
+    {% endfor %}
+  </tbody>
+</table>
+<button type="button" class="btn btn-primary" data-toggle="modal" data-target="#NewMaterialObject">
+  Nový díl
+</button>
+{% include "calculaber_app/new_material_object_modal.html" %}
+
+
+{% endblock %}

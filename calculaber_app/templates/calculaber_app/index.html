@@ -1,0 +1,33 @@
+{% extends "calculaber_app/base.html" %}
+{% block body_block %}
+
+
+{% if user.is_authenticated %}
+  <div class="jumbotron">
+    <h2>{{ user.username }}</h2>
+    <br>
+    <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#NewProject">
+      Nový projekt
+    </button>
+    <a href="{% url 'calculaber_app:material_list' %}" class="btn btn-info" role="button">Materiály</a>
+  </div>
+
+  {% for projects in projects %}
+    <div class="card" style="width: 18rem;">
+      <img src="media/{{projects.project_pic}}" class="card-img-top" alt="Responsive image">
+      <div class="card-body">
+        <h5 class="card-title">{{projects.name}}</h5>
+        <p class="card-text">{{projects.create_date}}</p>
+        <a href="{% url 'project_detail' pk=projects.pk %}" class="btn btn-primary stretched-link">Detail</a>
+      </div>
+    </div>
+
+  {% endfor %}
+
+  {% include "calculaber_app/new_project_modal.html" %}
+{% else %}
+  <div class="jumbotron">
+    <h1> continue</h1>
+  </div>
+{% endif %}
+{% endblock %}

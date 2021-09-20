@@ -1,0 +1,39 @@
+{% extends "calculaber_app/base.html" %}
+{% block body_block %}
+
+<div class="jumbotron">
+  <h2>Materiály</h2>
+</div>
+<table class="table" id="mydatatable">
+  <thead>
+    <tr>
+      <th scope="col">Název</th>
+      <th scope="col">Margin</th>
+      <th scope="col">Cena</th>
+      <th scope="col">Jednotky</th>
+      <th></th>
+    </tr>
+  </thead>
+  <tbody>
+    {% for material in material_list %}
+    <tr>
+      <td>{{material.name}}</td>
+      <td>{{material.margin}}</td>
+      <td>{{material.price}} CZK</td>
+      <td>{{material.units}}</td>
+      <td>
+        <a href="{% url 'material_update' pk=material.pk %}" class="btn btn-info" role="button">Editovat</a>
+        <form method="POST" action="{% url 'material_delete' pk=material.pk %}">
+           {% csrf_token %}<input class="btn btn-danger" type="submit" onclick="return confirm('Opravdu chcete materiál smazat?')" value="Smazat">
+        </form>
+      </td>
+    </tr>
+    {% endfor %}
+  </tbody>
+</table>
+<button type="button" class="btn btn-primary" data-toggle="modal" data-target="#NewMaterial">
+  Nový materiál
+</button>
+
+{% include "calculaber_app/new_material_modal.html" %}
+{% endblock %}

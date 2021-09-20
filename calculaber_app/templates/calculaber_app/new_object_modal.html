@@ -1,0 +1,20 @@
+<div class="modal fade" id="NewObject" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">Nový objekt</h5>
+
+      </div>
+      <form method="post" enctype="multipart/form-data">{% csrf_token %}
+        <div class="modal-body">
+          <p>Název {{ form.name }}</p>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-dismiss="modal">Zavřít</button>
+          <input type="submit" name="new_object_sub" class="btn btn-primary" value="Přidat objekt">
+
+        </div>
+      </form>
+    </div>
+  </div>
+</div>

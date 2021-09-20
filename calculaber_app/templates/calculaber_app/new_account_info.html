@@ -1,0 +1,12 @@
+{% extends "calculaber_app/base.html" %}
+{% block body_block %}
+
+<div class="jumbotron">
+  <h1>{{ user.username }}</h1>
+  <p>Informace o účtu a pravidlech</p>
+  <a class="btn btn-secondary" role="button" href="{% url 'calculaber_app:index' %}" >
+    Pokračujte na hlavní stránkku
+  </a>
+</div>
+
+{% endblock %}
