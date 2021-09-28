@@ -29,11 +29,13 @@
 
           {% if user.is_authenticated %}
           <ul class="navbar-nav ml-auto">
-<!--
             <li class="nav-item">
-                <p class="nav-link" disable>{{ user.username }}</p>
+                <a class="nav-link" href="{% url 'calculaber_app:index' %}">Projekty</a>
             </li>
--->
+            <li class="nav-item">
+                <a class="nav-link" href="{% url 'calculaber_app:material_list' %}">Materiály</a>
+            </li>
+
             {% if user.is_staff %}
             <li class="nav-item">
               <a class="nav-link" href="{% url 'admin:index' %}">Admin Console</a>

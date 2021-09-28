@@ -3,6 +3,7 @@
 
 <div class="jumbotron">
   <h2>{{ object_info.name }}</h2>
+  <a href="{% url 'project_detail' pk=object_info.project_id %}" class="btn btn-info" role="button">Zpět na projekt</a>
   <a href="{% url 'object_update' pk=object_info.id %}" class="btn btn-info" role="button">Upravit</a>
   <a href="{% url 'object_delete' pk=object_info.id %}" class="btn btn-danger" role="button">Smazat</a>
 </div>

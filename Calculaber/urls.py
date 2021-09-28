@@ -1,5 +1,5 @@
-#from django.conf import settings
-#from django.conf.urls.static import static
+from django.conf import settings
+from django.conf.urls.static import static
 
 from django.contrib import admin
 from django.urls import path,include
@@ -18,4 +18,4 @@ urlpatterns = [
     path('material/<int:pk>/update/',views.MaterialUpdateView.as_view(),name='material_update'),
     path('material/<int:pk>/delete/',views.MaterialDeleteView.as_view(),name='material_delete'),
     path('material_object/<int:pk>/delete/',views.MaterialObjectDeleteView.as_view(),name='material_object_delete'),
-] #+ static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)+static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
+] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)+static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)

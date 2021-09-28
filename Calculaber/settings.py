@@ -23,9 +23,9 @@ TEMPLATE_DIR= path.join(BASE_DIR,'calculaber_app/templates/calculaber_app')
 SECRET_KEY = 'django-insecure-m91#u#6tn01ehf7+rhu687_-xdwgj_q8wb6j__)zce0b1(=qxu'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = False
-
-ALLOWED_HOSTS = ["LockeArkady.pythonanywhere.com"]
+DEBUG = True
+ALLOWED_HOSTS=[]
+#ALLOWED_HOSTS = ["LockeArkady.pythonanywhere.com"]
 
 
 # Application definition

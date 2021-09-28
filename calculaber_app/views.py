@@ -130,6 +130,7 @@ class ObjectDetailView(LoginRequiredMixin,ListView):
             'form':forms.CreateMaterialObjectForm(user=self.request.user.id),
 
         })
+        print(context)
         return context
 
     def post(self, request, *args, **kwargs):

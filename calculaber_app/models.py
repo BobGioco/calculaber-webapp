@@ -45,5 +45,9 @@ class MaterialObject(models.Model):
     amount=models.DecimalField(default=0,blank=False, decimal_places=2,max_digits=65)
     create_date=models.DateTimeField(default=timezone.now,blank=True)
 
+    customized=models.BooleanField(default=False)
+    margin=models.DecimalField(default=0,blank=False, max_digits=3, decimal_places=2)
+    price=models.DecimalField(default=0,blank=False, decimal_places=2,max_digits=65)
+
     def __str__(self):
         return f"{self.name} - {self.amount} {self.material.get_units_display()}"
