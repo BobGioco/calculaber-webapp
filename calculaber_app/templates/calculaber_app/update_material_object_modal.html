@@ -1,0 +1,61 @@
+<div class="modal fade" id="UpdateMaterialObject" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">Upravit díl</h5>
+
+      </div>
+      <form method="post" enctype="multipart/form-data">{% csrf_token %}
+        <div class="modal-body">
+            <input class="form-control" id="materialobject_id" name='id' type="text" value="" style="display: none;">
+            <div class="form-group"> <!-- mb-3 -->
+              <label class="form-label" for="text_name">Název</label>
+              <input class="form-control" id="text_name" type="text" name="name" placeholder="Název" value="">
+            </div>
+
+            <label for="number_amount" class="form-label">Množství</label>
+            <div class="form-group input-group">
+              <!-- <div class="input-group-prepend">
+                <div class="input-group-text">@</div>
+              </div> -->
+              <input type="text" class="form-control" id="number_amount" name="amount" placeholder="Množství" value="">
+              <div class="input-group-append">
+                <span class="input-group-text" id="amount_units">m<sup>2</sup></span>
+              </div>
+            </div>
+
+            <div class="form-group form-check">
+              <input type="checkbox" class="form-check-input" name="customized" value="" id="checkbox_customized"> <!-- add checked if flag is true -->
+              <label class="form-check-label" for="checkbox_customized">Customize price</label>
+            </div>
+
+            <div class="check_box_true"> <!-- hidden -->
+              <div class="form-group">
+                <label class="form-label" for="text_name">Cena</label>
+                <div class="form-group input-group">
+                  <input class="form-control" id="number_price" type="number" placeholder="Cena" name="price" value="">
+                  <div class="input-group-append">
+                    <span class="input-group-text" id="price_format">CZK</span>
+                  </div>
+                </div>
+              </div>
+
+              <label for="number_margin" class="form-label">Margin</label>
+              <div class="form-group input-group">
+                <input type="number" class="form-control" id="number_margin" name="margin" placeholder="Margin" value="">
+                <div class="input-group-append">
+                  <span class="input-group-text" id="margin_format">%</span>
+                </div>
+              </div>
+            </div>
+
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-dismiss="modal">Zavřít</button>
+          <input type="submit" name="update_material_object_sub" class="btn btn-primary" value="Uložit">
+
+        </div>
+      </form>
+    </div>
+  </div>
+</div>

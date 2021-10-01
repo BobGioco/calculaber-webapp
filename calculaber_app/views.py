@@ -130,7 +130,7 @@ class ObjectDetailView(LoginRequiredMixin,ListView):
             'form':forms.CreateMaterialObjectForm(user=self.request.user.id),
 
         })
-        print(context)
+        #print(context)
         return context
 
     def post(self, request, *args, **kwargs):
@@ -150,9 +150,22 @@ class ObjectDetailView(LoginRequiredMixin,ListView):
                 obj.user=request.user
                 obj.save()
         elif "update_material_object_sub" in request.POST:
-            obj = models.MaterialObject.objects.get(id=request.POST.get('materialobject_pk'))
-            obj.name=request.POST.get('materiaobject_name')
-            obj.amount=request.POST.get('materiaobject_amount')
+            #print(request.POST)
+            obj = models.MaterialObject.objects.get(id=request.POST.get('id'),user=self.request.user)
+            obj.name=request.POST.get('name')
+            obj.amount=request.POST.get('amount')
+            if request.POST.get('customized', False):
+                obj.customized=True
+                obj.price=request.POST.get('price')
+                obj.margin=request.POST.get('margin')
+            else:
+                obj.customized=False
+                obj.price=None
+                obj.margin=None
+            obj.save()
+        elif "update_object_sub" in request.POST:
+            obj = models.Object.objects.get(id=request.POST.get('object_id'),user=self.request.user)
+            obj.name=request.POST.get('object_name')
             obj.save()
             #print(request.POST)
 
@@ -163,17 +176,6 @@ class ObjectDeleteView(LoginRequiredMixin,DeleteView):
 
     def get_success_url(self,**kwargs):
         return reverse_lazy('project_detail',kwargs = {'pk': self.get_object().project.id})
-
-class ObjectUpdateView(LoginRequiredMixin,UpdateView):
-    #success_url= reverse_lazy('calculaber_app:material_list')
-    model=models.Object
-    fields = ['name','project',] #['name','sensor_type','sensor_ID']
-    template_name_suffix = '_update_form'
-
-    def get_success_url(self,**kwargs):
-        pk2=self.get_object().id
-        pk1=models.Object.objects.filter(id=pk2).values()[0]['project_id']
-        return reverse_lazy('object_detail',kwargs = {'pk1': pk1, 'pk2': pk2})
 
 class ProjectUpdateView(LoginRequiredMixin,UpdateView):
     model=models.Project
