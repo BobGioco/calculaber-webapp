@@ -1,15 +1,24 @@
-<div class="modal fade" id="NewMaterialObject" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+<div class="modal fade" id="NewMaterialObject" tabindex="-1" role="dialog" aria-labelledby="Nový díl" aria-hidden="true">
   <div class="modal-dialog" role="document">
     <div class="modal-content">
       <div class="modal-header">
-        <h5 class="modal-title" id="exampleModalLabel">Nový díl</h5>
+        <h5 class="modal-title">Nový díl</h5>
 
       </div>
       <form method="post" enctype="multipart/form-data">{% csrf_token %}
         <div class="modal-body">
-          <p>Název dílu {{ form.name }}</p>
-          <p>Materiál {{ form.material }}</p>
-          <p>Množství/Velikost {{ form.amount }}</p>
+          <div class="form-group">
+            <label for="id_name" class="form-label">Název dílu</label>
+            {{ form.name }}
+          </div>
+          <div class="form-group">
+            <label for="id_material" class="form-label">Materiál</label>
+            {{ form.material }}
+          </div>
+          <div class="form-group">
+            <label for="id_material" class="form-label">Množství/Velikost</label>
+            {{ form.amount }}
+          </div>
         </div>
 
 

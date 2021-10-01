@@ -3,6 +3,7 @@
 
 <div class="jumbotron">
   <h2>{{ object_info.name }}</h2>
+  <h4>Celková cena {{ total_price }} CZK</h4>
   <a href="{% url 'project_detail' pk=object_info.project_id %}" class="btn btn-info" role="button">Zpět na projekt</a>
   <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#UpdateObject">
     Upravit
@@ -31,11 +32,16 @@
           <p id="p_name-{{material.pk}}">{{material.name}}</p>
         </td>
         <td>
-          <p id="p_amount-{{material.pk}}">{{material.amount}} {{material.material.get_units_display}}</p>
+          <p id="p_amount-{{material.pk}}">{{material.amount}} {% if material.material.get_units_display == 'm2' %}m<sup>2</sup>{% else %}{{material.material.get_units_display}}{% endif %}</p>
         </td>
         <td>{{material.material.name}}</td>
+        {% if material.customized == True %}
+          <td><p id="p_price-{{material.pk}}">{{material.price}} CZK</p></td>
+          <td><p id="p_margin-{{material.pk}}">{{material.margin}} %</p></td>
+        {% else %}
         <td><p id="p_price-{{material.pk}}">{{material.material.price}} CZK</p></td>
         <td><p id="p_margin-{{material.pk}}">{{material.material.margin}} %</p></td>
+        {% endif %}
         <td>{% widthratio material.amount 1 material.material.price %}</td>
         <td>
           <button id="edit_item_test-{{material.pk}}" type="button" class="btn btn-primary" data-toggle="modal" data-target="#UpdateMaterialObject">
@@ -51,7 +57,7 @@
     {% endfor %}
   </tbody>
 </table>
-<button type="button" class="btn btn-primary" data-toggle="modal" data-target="#NewMaterialObject">
+<button title="dil" type="button" class="btn btn-primary" data-toggle="modal" data-target="#NewMaterialObject">
   Nový díl
 </button>
 {% include "calculaber_app/new_material_object_modal.html" %}

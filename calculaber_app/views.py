@@ -128,10 +128,21 @@ class ObjectDetailView(LoginRequiredMixin,ListView):
             'material_object': models.MaterialObject.objects.filter(object=self.kwargs['pk2']).select_related().order_by('name'),
             'object_info': models.Object.objects.filter(user=self.request.user,id=self.kwargs['pk2']).values()[0],
             'form':forms.CreateMaterialObjectForm(user=self.request.user.id),
-
+            'update_form':forms.UpdateMaterialObjectForm(user=self.request.user.id),
+            'total_price':self.calculate_total(models.MaterialObject.objects.filter(object=self.kwargs['pk2']).select_related().order_by('name')),
         })
         #print(context)
         return context
+    def calculate_total(self,model):
+        total=0
+        for item in model:
+            if item.customized==True:
+                temp=item.amount*item.price*item.margin
+            else:
+                temp=item.amount*item.material.price*item.material.margin
+            total=total+temp
+        return str(round(total,2))
+
 
     def post(self, request, *args, **kwargs):
         #print(request.path_info)
@@ -150,7 +161,7 @@ class ObjectDetailView(LoginRequiredMixin,ListView):
                 obj.user=request.user
                 obj.save()
         elif "update_material_object_sub" in request.POST:
-            #print(request.POST)
+            print(request.POST)
             obj = models.MaterialObject.objects.get(id=request.POST.get('id'),user=self.request.user)
             obj.name=request.POST.get('name')
             obj.amount=request.POST.get('amount')
