@@ -17,7 +17,7 @@ class Material(models.Model):
         setup_1 = '1', "kus"
     user=models.ForeignKey(User,on_delete=models.CASCADE)
     name = models.CharField(max_length=128)
-    margin=models.DecimalField(default=0,blank=False, max_digits=3, decimal_places=2)
+    margin=models.DecimalField(default=0,blank=False, decimal_places=2,max_digits=65)
     price=models.DecimalField(default=0,blank=False, decimal_places=2,max_digits=65)
     create_date=models.DateTimeField(default=timezone.now)
     units = models.CharField(
@@ -46,7 +46,7 @@ class MaterialObject(models.Model):
     create_date=models.DateTimeField(default=timezone.now,blank=True)
 
     customized=models.BooleanField(default=False)
-    margin=models.DecimalField(blank=True, null=True, max_digits=3, decimal_places=2)
+    margin=models.DecimalField(blank=True, null=True, decimal_places=2,max_digits=65)
     price=models.DecimalField(blank=True, null=True, decimal_places=2,max_digits=65)
 
     def __str__(self):

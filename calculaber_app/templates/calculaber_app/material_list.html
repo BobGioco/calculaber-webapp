@@ -18,7 +18,7 @@
     {% for material in material_list %}
     <tr id={{material.pk}}>
       <td class="name">{{material.name}}</td>
-      <td class="margin">{{material.margin}}</td>
+      <td class="margin">{{material.margin}} %</td>
       <td class="price">{{material.price}} CZK</td>
       <td class="units">{% if material.get_units_display == 'm2' %}m<sup>2</sup>{% else %}{{material.get_units_display}}{% endif %}</td>
       <td>

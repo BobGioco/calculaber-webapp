@@ -106,26 +106,27 @@ class MaterialListView(LoginRequiredMixin,ListView):
         #print(request.path_info)
         #print(request)
         if "new_material_sub" in request.POST:
+            print(request.POST)
+            print('ererq')
             material_form=forms.CreateMaterialForm(request.POST)
             if material_form.is_valid():
+                print("rer")
                 obj = models.Material()
                 obj.name=material_form.cleaned_data.get("name")
                 obj.margin=material_form.cleaned_data.get("margin")
                 obj.price=material_form.cleaned_data.get("price")
                 obj.units=material_form.cleaned_data.get("units")
-                obj.project=material_form.cleaned_data.get("project")
                 obj.user=request.user
                 obj.save()
         elif "update_material_sub" in request.POST:
+            #print(request.POST)
             material_form=forms.UpdateMaterialForm(request.POST)
             if material_form.is_valid():
-                print(material_form)
                 obj = models.Material.objects.get(id=request.POST.get('id'),user=self.request.user)
                 obj.name=material_form.cleaned_data.get("name")
                 obj.margin=material_form.cleaned_data.get("margin")
                 obj.price=material_form.cleaned_data.get("price")
                 obj.units=material_form.cleaned_data.get("units")
-                obj.project=material_form.cleaned_data.get("project")
                 obj.user=request.user
                 obj.save()
 
