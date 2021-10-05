@@ -16,13 +16,15 @@
   </thead>
   <tbody>
     {% for material in material_list %}
-    <tr>
-      <td>{{material.name}}</td>
-      <td>{{material.margin}}</td>
-      <td>{{material.price}} CZK</td>
-      <td>{{material.units}}</td>
+    <tr id={{material.pk}}>
+      <td class="name">{{material.name}}</td>
+      <td class="margin">{{material.margin}}</td>
+      <td class="price">{{material.price}} CZK</td>
+      <td class="units">{% if material.get_units_display == 'm2' %}m<sup>2</sup>{% else %}{{material.get_units_display}}{% endif %}</td>
       <td>
-        <a href="{% url 'material_update' pk=material.pk %}" class="btn btn-info" role="button">Editovat</a>
+        <button id="edit_material-{{material.pk}}" type="button" class="btn btn-primary" data-toggle="modal" data-target="#UpdateMaterial">
+          Upravit
+        </button>
         <form method="POST" action="{% url 'material_delete' pk=material.pk %}">
            {% csrf_token %}<input class="btn btn-danger" type="submit" onclick="return confirm('Opravdu chcete materiál smazat?')" value="Smazat">
         </form>
@@ -31,9 +33,18 @@
     {% endfor %}
   </tbody>
 </table>
-<button type="button" class="btn btn-primary" data-toggle="modal" data-target="#NewMaterial">
+<button type="button" id="new_material" class="btn btn-primary" data-toggle="modal" data-target="#NewMaterial">
   Nový materiál
 </button>
 
 {% include "calculaber_app/new_material_modal.html" %}
+{% include "calculaber_app/update_material_modal.html" %}
+{% endblock %}
+{% block jquery %}
+{% load static %}
+<script type="text/javascript" src="https://cdn.datatables.net/v/bs4/dt-1.11.2/datatables.min.js"></script>
+<script type="text/javascript" src="{% static 'js/update_material.js' %}" charset="utf-8"></script>
+<script type="text/javascript" charset="utf-8">
+  $('#mydatatable').DataTable()
+</script>
 {% endblock %}

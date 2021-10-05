@@ -1,4 +1,4 @@
-<div class="modal fade" id="NewProject" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+<div class="modal fade" id="NewProject" tabindex="-1" role="dialog" aria-labelledby="Nový projekt" aria-hidden="true">
   <div class="modal-dialog" role="document">
     <div class="modal-content">
       <div class="modal-header">
@@ -7,8 +7,17 @@
       </div>
       <form method="post" enctype="multipart/form-data">{% csrf_token %}
         <div class="modal-body">
-          <p>Název {{ form.name }}</p>
-          <p>Logo {{ form.project_pic }}</p>
+
+          <div class="form-group">
+            <label class="form-label" for="{{ form.name.id_for_label }}">Název</label>
+            {{ form.name }}
+          </div>
+
+          <div class="custom-file mb-3">
+            {{ form.project_pic }}
+            <label class="custom-file-label" for="{{ form.project_pic.id_for_label }}" data-browse="Hledat">Vyber obrázek...</label>
+            <div class="invalid-feedback">Example invalid custom file feedback</div>
+          </div>
         </div>
 
 

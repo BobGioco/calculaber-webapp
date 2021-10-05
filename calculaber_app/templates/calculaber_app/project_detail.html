@@ -4,7 +4,9 @@
 <div class="jumbotron">
   <h1>{{ project.name }}</h1>
   <h4>{{ project.create_date }}</h4>
-  <a href="{% url 'project_update' pk=project.id %}" class="btn btn-info" role="button">Upravit</a>
+  <button type="button" id="update_project_btn" class="btn btn-primary" data-toggle="modal" data-target="#UpdateProject">
+    Upravit
+  </button>
   <a href="{% url 'project_delete' pk=project.id %}" class="btn btn-danger" role="button">Smazat</a>
 
 </div>
@@ -29,8 +31,26 @@
       {% endfor %}
     </div>
 
-
+{% include "calculaber_app/update_project_modal.html" %}
 {% include "calculaber_app/new_object_modal.html" %}
 {% include "calculaber_app/duplicate_object_modal.html" %}
+
+{% endblock %}
+
+{% block jquery %}
+{% load static %}
+<script type="text/javascript" src="{% static 'js/update_project.js' %}" charset="utf-8"></script>
+<script type="text/javascript" charset="utf-8">
+  $('button#update_project_btn').click(function() {
+    $('#{{ form_update.name.id_for_label }}').attr('value',"{{ project.name }}");
+    if("{{ project.project_pic }}".length>0){
+      var pic_name="{{ project.project_pic }}".split('/')
+      $("label.custom-file-label[for='{{ form_update.project_pic.id_for_label }}']").html(pic_name[pic_name.length-1]);
+    }else{
+      console.log("no pic");
+      $("label.custom-file-label[for='{{ form_update.project_pic.id_for_label }}']").html("Vyber obrázek...");
+    }
+      });
+</script>
 
 {% endblock %}

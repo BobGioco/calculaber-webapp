@@ -1,0 +1,37 @@
+<div class="modal fade" id="UpdateProject" tabindex="-1" role="dialog" aria-labelledby="Upravit projekt" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title">Nový projekt</h5>
+
+      </div>
+      <form method="post" enctype="multipart/form-data">{% csrf_token %}
+        <div class="modal-body">
+
+          <div class="form-group">
+            <label class="form-label" for="{{ form.name.id_for_label }}">Název</label>
+            {{ form_update.name }}
+          </div>
+
+          <div class="custom-file mb-3">
+            {{ form_update.project_pic }}
+            {% if project.project_pic is None %}
+              <label class="custom-file-label" for="{{ form_update.project_pic.id_for_label }}" data-browse="Hledat">Vyber obrázek...</label>
+            {% else %}
+              <label class="custom-file-label" for="{{ form_update.project_pic.id_for_label }}" data-browse="Hledat">{{ project.project_pic }}</label>
+            {% endif %}
+            <div class="invalid-feedback">Example invalid custom file feedback</div>
+          </div>
+        </div>
+
+
+
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-dismiss="modal">Zavřít</button>
+          <input type="submit" name="update_project_sub" class="btn btn-primary" value="Uložit">
+
+        </div>
+      </form>
+    </div>
+  </div>
+</div>

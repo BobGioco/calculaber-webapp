@@ -7,17 +7,29 @@
       </div>
       <form method="post" enctype="multipart/form-data">{% csrf_token %}
         <div class="modal-body">
-          <p>Název {{ form.name }}</p>
-          <p>Margin {{ form.margin }}</p>
-          <p>Cena {{ form.price }}</p>
-          <p>Jednotky {{ form.units }}</p>
+          <div class="form-group">
+            <label class="form-label" for="{{ form.name.id_for_label }}">Název</label>
+            {{ form.name }}
+          </div>
+          <div class="form-group">
+            <label class="form-label" for="{{ form.price.id_for_label }}">Cena</label>
+            {{ form.price }}
+          </div>
+          <div class="form-group">
+            <label class="form-label" for="{{ form.margin.id_for_label }}">Margin</label>
+            {{ form.margin }}
+          </div>
+          <div class="form-group">
+            <label class="form-label" for="{{ form.units.id_for_label }}">Jednotky</label>
+            {{ form.units }}
+          </div>
         </div>
 
 
 
         <div class="modal-footer">
           <button type="button" class="btn btn-secondary" data-dismiss="modal">Zavřít</button>
-          <input type="submit" class="btn btn-primary" value="Přidat">
+          <input type="submit" name="new_material_sub" class="btn btn-primary" value="Přidat">
 
         </div>
       </form>

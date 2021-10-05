@@ -36,6 +36,7 @@ class ProjectDetailView(LoginRequiredMixin,ListView):
          'form':forms.CreateObjectForm,
          'project':models.Project.objects.filter(user=self.request.user,id=self.kwargs['pk']).values()[0],
          'list_all': models.Object.objects.filter(user=self.request.user).select_related('project'),
+         'form_update':forms.CreateProjectForm,
         })
         return context
 
@@ -68,6 +69,16 @@ class ProjectDetailView(LoginRequiredMixin,ListView):
                 new_item.amount=item.amount
                 new_item.user=request.user
                 new_item.save()
+        elif "update_project_sub" in request.POST:
+            print(request.POST)
+            print(request.FILES)
+            object_form=forms.CreateProjectForm(request.POST, request.FILES)
+            if object_form.is_valid():
+                obj=models.Project.objects.get(id=self.kwargs['pk'])
+                obj.name=object_form.cleaned_data.get("name")
+                if not object_form.cleaned_data.get("project_pic") is None:
+                    obj.project_pic=object_form.cleaned_data.get("project_pic")
+                obj.save()
 
         return HttpResponseRedirect(request.path_info)
 
@@ -84,6 +95,7 @@ class MaterialListView(LoginRequiredMixin,ListView):
         context = super (). get_context_data (** kwargs)
         context.update({
          'form':forms.CreateMaterialForm,
+         'form_update':forms.UpdateMaterialForm,
         })
         return context
 
@@ -93,25 +105,31 @@ class MaterialListView(LoginRequiredMixin,ListView):
     def post(self, request, *args, **kwargs):
         #print(request.path_info)
         #print(request)
-        material_form=forms.CreateMaterialForm(request.POST)
-        if material_form.is_valid():
-            #print(object_form)
-            obj = models.Material()
-            obj.name=material_form.cleaned_data.get("name")
-            obj.margin=material_form.cleaned_data.get("margin")
-            obj.price=material_form.cleaned_data.get("price")
-            obj.units=material_form.cleaned_data.get("units")
-            obj.project=material_form.cleaned_data.get("project")
-            obj.user=request.user
-            obj.save()
+        if "new_material_sub" in request.POST:
+            material_form=forms.CreateMaterialForm(request.POST)
+            if material_form.is_valid():
+                obj = models.Material()
+                obj.name=material_form.cleaned_data.get("name")
+                obj.margin=material_form.cleaned_data.get("margin")
+                obj.price=material_form.cleaned_data.get("price")
+                obj.units=material_form.cleaned_data.get("units")
+                obj.project=material_form.cleaned_data.get("project")
+                obj.user=request.user
+                obj.save()
+        elif "update_material_sub" in request.POST:
+            material_form=forms.UpdateMaterialForm(request.POST)
+            if material_form.is_valid():
+                print(material_form)
+                obj = models.Material.objects.get(id=request.POST.get('id'),user=self.request.user)
+                obj.name=material_form.cleaned_data.get("name")
+                obj.margin=material_form.cleaned_data.get("margin")
+                obj.price=material_form.cleaned_data.get("price")
+                obj.units=material_form.cleaned_data.get("units")
+                obj.project=material_form.cleaned_data.get("project")
+                obj.user=request.user
+                obj.save()
 
         return HttpResponseRedirect(request.path_info)
-
-class MaterialUpdateView(LoginRequiredMixin,UpdateView):
-    success_url= reverse_lazy('calculaber_app:material_list')
-    model=models.Material
-    fields = ['name','margin','price','units'] #['name','sensor_type','sensor_ID']
-    template_name_suffix = '_update_form'
 
 class MaterialDeleteView(LoginRequiredMixin,DeleteView):
     model=models.Material
@@ -137,9 +155,9 @@ class ObjectDetailView(LoginRequiredMixin,ListView):
         total=0
         for item in model:
             if item.customized==True:
-                temp=item.amount*item.price*item.margin
+                temp=item.amount*(item.price*(item.margin/100))
             else:
-                temp=item.amount*item.material.price*item.material.margin
+                temp=item.amount*(item.material.price*(item.material.margin/100))
             total=total+temp
         return str(round(total,2))
 
@@ -187,15 +205,6 @@ class ObjectDeleteView(LoginRequiredMixin,DeleteView):
 
     def get_success_url(self,**kwargs):
         return reverse_lazy('project_detail',kwargs = {'pk': self.get_object().project.id})
-
-class ProjectUpdateView(LoginRequiredMixin,UpdateView):
-    model=models.Project
-    fields = ['name','project_pic',] #['name','sensor_type','sensor_ID']
-    template_name_suffix = '_update_form'
-
-    def get_success_url(self,**kwargs):
-        pk=self.get_object().id
-        return reverse_lazy('project_detail',kwargs = {'pk': pk})
 
 class MaterialObjectDeleteView(LoginRequiredMixin,DeleteView):
     model=models.MaterialObject

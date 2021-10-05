@@ -5,16 +5,68 @@ class CreateProjectForm(forms.ModelForm):
     class Meta:
         model = Project
         fields = ('name','project_pic')
+    def __init__(self, *args, **kwargs):
+        super(CreateProjectForm, self).__init__(*args, **kwargs)
+        self.fields['name'].widget.attrs={
+                'class':"form-control",
+                'placeholder': 'Zadejte jméno projektu',}
+        self.fields['project_pic'].widget.attrs={
+                'class':"custom-file-input",
+                }
 
 class CreateObjectForm(forms.ModelForm):
     class Meta:
         model = Object
         fields = ('name',)
 
+    def __init__(self, *args, **kwargs):
+        super(CreateObjectForm, self).__init__(*args, **kwargs)
+        self.fields['name'].widget.attrs={
+                'class':"form-control",
+                'name':'name',
+                'placeholder': 'Název'}
+
 class CreateMaterialForm(forms.ModelForm):
     class Meta:
         model = Material
         fields = ('name','margin','price','units',)
+
+    def __init__(self, *args, **kwargs):
+        super(CreateMaterialForm, self).__init__(*args, **kwargs)
+        self.fields['name'].widget.attrs={
+                'class':"form-control",
+                'placeholder': 'Zadejte jméno matiálu',}
+        self.fields['margin'].widget.attrs={
+                'class':"form-control",
+                'placeholder': 'Zadejte margin',}
+        self.fields['price'].widget.attrs={
+                'class':"form-control",
+                'placeholder': 'Zadejte cenu',}
+        self.fields['units'].widget.attrs={
+                'class':"custom-select",}
+
+class UpdateMaterialForm(forms.ModelForm):
+    class Meta:
+        model = Material
+        fields = ('name','margin','price','units',)
+
+    def __init__(self, *args, **kwargs):
+        super(UpdateMaterialForm, self).__init__(*args, **kwargs)
+        self.fields['name'].widget.attrs={
+                'class':"form-control",
+                'id':'update_material_name',
+                'placeholder': 'Zadejte jméno matiálu',}
+        self.fields['margin'].widget.attrs={
+                'class':"form-control",
+                'id':'update_material_margin',
+                'placeholder': 'Zadejte margin',}
+        self.fields['price'].widget.attrs={
+                'class':"form-control",
+                'id':'update_material_price',
+                'placeholder': 'Zadejte cenu',}
+        self.fields['units'].widget.attrs={
+                'class':"custom-select",
+                'id':'update_material_units',}
 
 class CreateMaterialObjectForm(forms.ModelForm):
     class Meta:

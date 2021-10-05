@@ -1,0 +1,39 @@
+<div class="modal fade" id="UpdateMaterial" tabindex="-1" role="dialog" aria-labelledby="Upravit materiál" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title">Upravit materiál</h5>
+
+      </div>
+      <form method="post" enctype="multipart/form-data">{% csrf_token %}
+        <div class="modal-body">
+          <input class="form-control" id="material_id" name='id' type="text" value="" style="display: none;">
+          <div class="form-group">
+            <label class="form-label" for="{{ form_update.name.id_for_label }}">Název</label>
+            {{ form_update.name }}
+          </div>
+          <div class="form-group">
+            <label class="form-label" for="{{ form_update.price.id_for_label }}">Cena</label>
+            {{ form_update.price }}
+          </div>
+          <div class="form-group">
+            <label class="form-label" for="{{ form_update.margin.id_for_label }}">Margin</label>
+            {{ form_update.margin }}
+          </div>
+          <div class="form-group">
+            <label class="form-label" for="{{ form_update.units.id_for_label }}">Jednotky</label>
+            {{ form_update.units }}
+          </div>
+        </div>
+
+
+
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-dismiss="modal">Zavřít</button>
+          <input type="submit" name="update_material_sub" class="btn btn-primary" value="Uložit">
+
+        </div>
+      </form>
+    </div>
+  </div>
+</div>

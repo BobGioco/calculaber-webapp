@@ -10,7 +10,7 @@
   </button>
   <a href="{% url 'object_delete' pk=object_info.id %}" class="btn btn-danger" role="button">Smazat</a>
 </div>
-<table class="table">
+<table class="table" id="object_detail_tbl">
   <thead>
     <tr>
       <th scope="col">Díl</th>
@@ -24,27 +24,21 @@
   </thead>
   <tbody>
     {% for material in material_object %}
-    <tr>
+    <tr id={{material.pk}} class="{% if material.customized == True %}customized{% endif %}">
       <form method="POST" enctype="multipart/form-data">{% csrf_token %}
-
-        <td>
-          <input class="form-control" id="customized-{{material.pk}}" name='materialobject_customized' type="text" value="{{material.customized}}" disabled hidden>
-          <p id="p_name-{{material.pk}}">{{material.name}}</p>
-        </td>
-        <td>
-          <p id="p_amount-{{material.pk}}">{{material.amount}} {% if material.material.get_units_display == 'm2' %}m<sup>2</sup>{% else %}{{material.material.get_units_display}}{% endif %}</p>
-        </td>
+        <td class="name">{{material.name}}</td>
+        <td class="amount">{{material.amount}} {% if material.material.get_units_display == 'm2' %}m<sup>2</sup>{% else %}{{material.material.get_units_display}}{% endif %}</td>
         <td>{{material.material.name}}</td>
         {% if material.customized == True %}
-          <td><p id="p_price-{{material.pk}}">{{material.price}} CZK</p></td>
-          <td><p id="p_margin-{{material.pk}}">{{material.margin}} %</p></td>
+          <td class="price">{{material.price}} CZK</td>
+          <td class="margin">{{material.margin}} %</td>
         {% else %}
-        <td><p id="p_price-{{material.pk}}">{{material.material.price}} CZK</p></td>
-        <td><p id="p_margin-{{material.pk}}">{{material.material.margin}} %</p></td>
+          <td class="price">{{material.material.price}} CZK</td>
+          <td class="margin">{{material.material.margin}} %</td>
         {% endif %}
-        <td>{% widthratio material.amount 1 material.material.price %}</td>
+        <td class="total"></td><!--{% widthratio material.amount 1 material.material.price %}-->
         <td>
-          <button id="edit_item_test-{{material.pk}}" type="button" class="btn btn-primary" data-toggle="modal" data-target="#UpdateMaterialObject">
+          <button id="edit_item-{{material.pk}}" type="button" class="btn btn-primary" data-toggle="modal" data-target="#UpdateMaterialObject">
             Upravit
           </button>
           <form method="POST" action="{% url 'material_object_delete' pk=material.pk %}">
@@ -64,4 +58,8 @@
 {% include "calculaber_app/update_object_modal.html" %}
 {% include "calculaber_app/update_material_object_modal.html" %}
 
+{% endblock %}
+{% block jquery %}
+{% load static %}
+<script type="text/javascript" src="{% static 'js/update_materialobject.js' %}" charset="utf-8"></script>
 {% endblock %}
