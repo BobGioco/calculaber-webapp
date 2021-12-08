@@ -1,8 +1,15 @@
 {% extends "calculaber_app/base.html" %}
 {% block body_block %}
+{% load humanize %}
+<div class="">
+  <a href="{% url 'calculaber_app:index' %}">Projekty</a>
+  \
+  <a href="{% url 'project_detail'  pk=project.id %}">{{ project.name }}</a>\
 
+</div>
 <div class="jumbotron">
   <h1>{{ project.name }}</h1>
+  <h3 class="total_price"></h3>q
   <h4>{{ project.create_date }}</h4>
   <button type="button" id="update_project_btn" class="btn btn-primary" data-toggle="modal" data-target="#UpdateProject">
     Upravit
@@ -19,27 +26,72 @@
       Duplikovat objekt
     </button>
   </div>
-  <div class="container-fluid">
-    {% for object in project_detail %}
-      <div class="card" style="width: 18rem;">
-        <div class="card-body">
-          <h5 class="card-title">{{object.name}}</h5>
-          <p class="card-text">{{object.create_date}}</p>
-          <a href="{% url 'object_detail' pk1=project.id pk2=object.pk %}" class="btn btn-primary stretched-link">Detail</a>
-        </div>
-      </div>
-      {% endfor %}
-    </div>
+  <div id="object-cards" class="container-fluid">
+
+  </div>
 
 {% include "calculaber_app/update_project_modal.html" %}
 {% include "calculaber_app/new_object_modal.html" %}
 {% include "calculaber_app/duplicate_object_modal.html" %}
-
+{% csrf_token %}
 {% endblock %}
 
 {% block jquery %}
 {% load static %}
-<script type="text/javascript" src="{% static 'js/update_project.js' %}" charset="utf-8"></script>
+<script type="text/javascript">
+  function FormatNumber(number_text) {
+    var value = (Number(number_text)).toLocaleString(
+      undefined,
+      { minimumFractionDigits: 2 }
+    );
+    return value;
+  };
+</script>
+<script type="text/javascript">
+  var object_path="{% url 'object_detail' pk1=project.id pk2=0 %}";
+  var extra_expense_path="{% url 'extra_expense_detail' pk=project.id %}";
+  var project={{ project_json|safe }};
+  var extra_expense={{ extra_expense_json|safe }};
+  var objects= {{ project_detail|safe }};
+  var all_objects= {{ all_objects|safe }};
+  var tag_array= {{ tag_list|safe }};
+  var new_tag_array=[];
+  function GenerateObjectCard(id,name,price,date){
+    html_txt='';
+    html_txt+="<div class='card' style='width: 18rem;'>";
+    html_txt+="<div class='card-body'>";
+    html_txt+="<h5 class='card-title'>" + name +"</h5>";
+    html_txt+="<p class='card-text'>Cena " + FormatNumber(price) +" CZK</p>";
+    html_txt+="<p class='card-text'>" + date + "</p>";
+    html_txt+="<a href=" + object_path.replace('0',id) + " class='btn btn-primary stretched-link'>Detail</a>";
+    html_txt+="</div>";
+    html_txt+="</div>";
+    return html_txt;
+  };
+  function GenerateExtraExpenseCard(price){
+    html_txt+="<div id='extra_expense' class='card' style='width: 18rem;'>";
+    html_txt+="<div class='card-body'>";
+    html_txt+="<h5 class='card-title'>Další náklady</h5>";
+    html_txt+="<p class='card-text'>Cena " + FormatNumber(price) + " CZK</p>";
+    html_txt+="<a href=" + extra_expense_path + " class='btn btn-primary stretched-link'>Detail</a>";
+    html_txt+="</div>";
+    html_txt+="</div>";
+    return html_txt;
+  };
+  document.addEventListener("DOMContentLoaded", function() {
+      var container = document.getElementById("object-cards");
+      $("h3.total_price")[0].innerHTML=FormatNumber(objects.map(item => item.object_price).reduce((prev, next) => Number(prev) + Number(next))) + " CZK";
+      //table.innerHTML="";
+      var tr="";
+      //console.log(container);
+      objects.forEach(x=>{
+         tr+=GenerateObjectCard(x.id,x.name,x.object_price,x.create_date);
+      });
+      container.innerHTML+=tr;
+      container.innerHTML+=GenerateExtraExpenseCard(extra_expense.map(item => Number(item.price)).reduce((prev, next) => prev + next));
+    });
+</script>
+
 <script type="text/javascript" charset="utf-8">
   $('button#update_project_btn').click(function() {
     $('#{{ form_update.name.id_for_label }}').attr('value',"{{ project.name }}");
@@ -52,5 +104,5 @@
     }
       });
 </script>
-
+<script type="text/javascript" src="{% static 'js/project_detail.js' %}" charset="utf-8"></script>
 {% endblock %}

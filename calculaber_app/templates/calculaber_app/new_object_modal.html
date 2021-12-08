@@ -5,11 +5,17 @@
         <h5 class="modal-title">Nový objekt</h5>
 
       </div>
-      <form method="post" enctype="multipart/form-data">{% csrf_token %}
+      <form class="new_object" method="post" enctype="multipart/form-data">
         <div class="modal-body">
           <div class="form-group">
             <label class="form-label" for="{{ form.name.id_for_label }}">Název</label>
             {{ form.name }}
+          </div>
+          <div class="form-group">
+            {{ form_tag.tag }}
+          </div>
+          <div class="tag-container">
+
           </div>
         </div>
         <div class="modal-footer">

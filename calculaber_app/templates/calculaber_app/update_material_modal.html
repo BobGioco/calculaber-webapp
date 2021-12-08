@@ -5,7 +5,7 @@
         <h5 class="modal-title">Upravit materiál</h5>
 
       </div>
-      <form method="post" enctype="multipart/form-data">{% csrf_token %}
+      <form class="update_material" method="post" enctype="multipart/form-data">
         <div class="modal-body">
           <input class="form-control" id="material_id" name='id' type="text" value="" style="display: none;">
           <div class="form-group">
@@ -35,7 +35,13 @@
             <label class="form-label" for="{{ form_update.units.id_for_label }}">Jednotky</label>
             {{ form_update.units }}
           </div>
+          <div class="form-group">
+            <label class="form-label" for="{{ tag_form.tag.id_for_label }}">Tag</label>
+            {{ tag_form.tag }}
+          </div>
+          <div class="tag-container">
 
+          </div>
 
         </div>
 

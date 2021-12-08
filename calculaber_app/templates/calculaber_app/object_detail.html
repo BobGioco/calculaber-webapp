@@ -1,9 +1,20 @@
 {% extends "calculaber_app/base.html" %}
 {% block body_block %}
+<div class="link">
+  <a href="{% url 'calculaber_app:index' %}">Projekty</a>
+  \
+  <a href="{% url 'project_detail'  pk=object_info.project_id %}">{{ object_info.project__name }}</a>
+  \
+  <a href="{% url 'object_detail'  pk1=object_info.project_id  pk2=object_info.id %}">{{ object_info.name }}</a>
+  \
 
+</div>
 <div class="jumbotron">
-  <h2>{{ object_info.name }}</h2>
-  <h4>Celková cena {{ total_price }} CZK</h4>
+  <h2 class="object_name">{{ object_info.name }}</h2>
+  <h4 class="total_object_price"></h4>
+  <div class="tag_container">
+
+  </div>
   <a href="{% url 'project_detail' pk=object_info.project_id %}" class="btn btn-info" role="button">Zpět na projekt</a>
   <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#UpdateObject">
     Upravit
@@ -23,43 +34,87 @@
     </tr>
   </thead>
   <tbody>
-    {% for material in material_object %}
-    <tr id={{material.pk}} class="{% if material.customized == True %}customized{% endif %}">
-      <form method="POST" enctype="multipart/form-data">{% csrf_token %}
-        <td class="name">{{material.name}}</td>
-        <td class="amount">{{material.amount}} {% if material.material.get_units_display == 'm2' %}m<sup>2</sup>{% else %}{{material.material.get_units_display}}{% endif %}</td>
-        <td>{{material.material.name}}</td>
-        {% if material.customized == True %}
-          <td class="price">{{material.price}} CZK</td>
-          <td class="margin">{{material.margin}} %</td>
-        {% else %}
-          <td class="price">{{material.material.price}} CZK</td>
-          <td class="margin">{{material.material.margin}} %</td>
-        {% endif %}
-        <td class="total"></td><!--{% widthratio material.amount 1 material.material.price %}-->
-        <td>
-          <button id="edit_item-{{material.pk}}" type="button" class="btn btn-primary" data-toggle="modal" data-target="#UpdateMaterialObject">
-            Upravit
-          </button>
-          <form method="POST" action="{% url 'material_object_delete' pk=material.pk %}">
-             {% csrf_token %}<input class="btn btn-danger" id="delete_item-{{material.pk}}" type="submit" onclick="return confirm('Jste si jistí, že chcete materiál odebrat?')" value="Smazat">
-          </form>
-        </td>
 
-      </form>
-    </tr>
-    {% endfor %}
   </tbody>
 </table>
 <button title="dil" type="button" class="btn btn-primary" data-toggle="modal" data-target="#NewMaterialObject">
   Nový díl
 </button>
+{% csrf_token %}
+{% include "calculaber_app/update_material_object_modal.html" %}
 {% include "calculaber_app/new_material_object_modal.html" %}
 {% include "calculaber_app/update_object_modal.html" %}
-{% include "calculaber_app/update_material_object_modal.html" %}
+
 
 {% endblock %}
 {% block jquery %}
 {% load static %}
-<script type="text/javascript" src="{% static 'js/update_materialobject.js' %}" charset="utf-8"></script>
+<script type="text/javascript">
+  function FormatNumber(number_text) {
+    var value = (Number(number_text)).toLocaleString(
+      undefined,
+      { minimumFractionDigits: 2 }
+    );
+    return value;
+  };
+</script>
+<script type="text/javascript">
+  var object={{ object_info_json|safe }}
+  var materialobjects= {{ material_object_json|safe }};
+  var material_tags= {{ material_tags_json|safe }};
+  var object_tags={{ object_tags_json|safe }};
+  var material= {{ material_json|safe }};
+  var units= {{ units_list|safe }};
+  var new_tag_array=[];
+  function GenerateRow(id,name,material_name,amount,units_id,price,margin,total_price){
+    html_txt="<tr id=" + id + ">";
+    html_txt+="<td class='name'>" + name + "</td>";
+    if(units[units_id]==="m2"){
+      html_txt+="<td class='amount'>" + FormatNumber(amount) + "m<sup>2</sup></td>";
+    }else if (units[units_id]==="m3") {
+      html_txt+="<td class='amount'>" + FormatNumber(amount) + "m<sup>3</sup></td>";
+    }else {
+      html_txt+="<td class='amount'>" + FormatNumber(amount) + " " + units[units_id] + "</td>";
+    };
+    html_txt+="<td class='material-name'>" + material_name + "</td>";
+    html_txt+="<td class='price'>" + FormatNumber(price) + " Kč</td>";
+    html_txt+="<td class='margin'>" + FormatNumber(margin) + " %</td>";
+    html_txt+="<td class='total'>" + FormatNumber(total_price) + " Kč</td>";
+    html_txt+="<td>";
+    html_txt+="<button type='button' class='btn btn-primary update' data-toggle='modal' data-target='#UpdateMaterialObject'>Upravit</button>";
+    html_txt+="<form class='delete_materialobject' method='POST'><input class='btn btn-danger' type='submit' onclick=\"return confirm('Opravdu chcete díl smazat?')\" value='Smazat'></form>";
+    html_txt+="</td>"
+    return html_txt;
+  };
+  function GenerateTags(tag_array){
+    var tags='';
+    tag_array.forEach(i=>{
+      tags+="<span class='badge rounded-pill bg-warning text-dark'>" + i.tag + "</span>";
+    });
+    return tags;
+  };
+  document.addEventListener("DOMContentLoaded", function() {
+      var table = document.getElementById("object_detail_tbl").getElementsByTagName("tbody")[0];
+
+      var tr="";
+      materialobjects.forEach(x=>{
+         if (x.customized===true) {
+           x.total_price=Number(x.amount)*Number(x.price)*((100+Number(x.margin))/100)
+           tr+=GenerateRow(x.id,x.name,x.material__name,x.amount,x.material__units,x.price,x.margin,x.total_price)
+         }
+         else {
+           x.total_price=Number(x.amount)*Number(x.material__price)*((100+Number(x.material__margin))/100)
+           tr+=GenerateRow(x.id,x.name,x.material__name,x.amount,x.material__units,x.material__price,x.material__margin,x.total_price)
+         }
+      });
+      table.innerHTML+=tr;
+      if(materialobjects.length>0){
+        $('h4.total_object_price')[0].innerHTML=FormatNumber(materialobjects.map(item => item.total_price).reduce((prev, next) => Number(prev) + Number(next))) + " Kč"
+      }else {
+        $('h4.total_object_price')[0].innerHTML=FormatNumber(0) + " Kč"
+      }
+      $("div.tag_container")[0].innerHTML=GenerateTags(object_tags);
+    });
+</script>
+<script type="text/javascript" src="{% static 'js/object_detail.js' %}" charset="utf-8"></script>
 {% endblock %}

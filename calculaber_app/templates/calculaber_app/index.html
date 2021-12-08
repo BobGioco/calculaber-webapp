@@ -3,6 +3,10 @@
 
 
 {% if user.is_authenticated %}
+  <div class="">
+    <a href="{% url 'calculaber_app:index' %}">Projekty</a> \
+  </div>
+
   <div class="jumbotron">
     <h2>{{ user.username }}</h2>
     <br>

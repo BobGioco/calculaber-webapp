@@ -1,0 +1,71 @@
+{% extends "calculaber_app/base.html" %}
+{% block body_block %}
+{% load humanize %}
+<div class="link">
+  <a href="{% url 'calculaber_app:index' %}">Projekty</a>
+  \
+  <a href="{% url 'project_detail'  pk=project.id %}">{{ project.name }}</a>
+  \
+  <a href="{% url 'extra_expense_detail'  pk=project.id %}">Extra expense</a>
+  \
+</div>
+<div class="jumbotron">
+  <h2>Další výdaje</h2>
+  <h4>Celková cena <span class="total_price"></span></h4>
+  <a href="{% url 'project_detail' pk=project.id %}" class="btn btn-info" role="button">Zpět na projekt</a>
+</div>
+{% csrf_token %}
+<table class="table" id="extra_expense_detail_tbl">
+  <thead>
+    <tr>
+      <th scope="col">Název</th>
+      <th scope="col">Popis</th>
+      <th scope="col">Cena</th>
+      <th></th>
+    </tr>
+  </thead>
+  <tbody>
+
+  </tbody>
+</table>
+<button title="dil" type="button" class="btn btn-primary" data-toggle="modal" data-target="#NewExtraExpense">
+  Nový výdaj
+</button>
+{% include "calculaber_app/new_extra_expense_modal.html" %}
+{% include "calculaber_app/update_extra_expense_modal.html" %}
+
+{% endblock %}
+{% block jquery %}
+{% load static %}
+<script type="text/javascript">
+  function FormatNumber(number_text) {
+    var value = (Number(number_text)).toLocaleString(
+      undefined,
+      { minimumFractionDigits: 2 }
+    );
+    return value;
+  };
+</script>
+<script type="text/javascript">
+  var extra_expense = {{ extra_expense_json|safe }};
+  var project_id={{ project.id }};
+
+  document.addEventListener("DOMContentLoaded", function() {
+      var table = document.getElementById("extra_expense_detail_tbl").getElementsByTagName("tbody")[0];
+      var tr="";
+      console.log('here');
+      extra_expense.forEach(x=>{
+         tr+="<tr id='" + x.id + "'>";
+         tr+="<td class='name'>"+x.name+"</td>"+"<td class='description'>"+x.description+"</td>"+"<td class='price'>"+FormatNumber(x.price)+" Kč</td>";
+         tr+="<td>";
+         tr+="<button type='button' class='btn btn-primary update' data-toggle='modal' data-target='#UpdateExtraExpense'>Upravit</button>";
+         tr+="<form class='delete_extra_expense' method='POST'><input class='btn btn-danger' name='delete_extra_expense_sub' type='submit' onclick=\"return confirm('Opravdu chcete výdaj smazat?')\" value='Smazat'></form>";
+         tr+="</td>";
+         tr+='</tr>';
+      })
+      table.innerHTML+=tr;
+      $("h4 span.total_price").text(FormatNumber(extra_expense.map(item => item.price).reduce((prev, next) => Number(prev) + Number(next))) + " Kč")
+  });
+</script>
+<script type="text/javascript" src="{% static 'js/extra_expense.js' %}" charset="utf-8"></script>
+{% endblock %}

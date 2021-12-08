@@ -1,3 +1,4 @@
+{% load l10n %}
 <div class="modal fade" id="NewMaterial" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
   <div class="modal-dialog" role="document">
     <div class="modal-content">
@@ -5,7 +6,7 @@
         <h5 class="modal-title" id="exampleModalLabel">Nový materiál</h5>
 
       </div>
-      <form method="post" enctype="multipart/form-data">{% csrf_token %}
+      <form class="new_material" method="post" enctype="multipart/form-data">
         <div class="modal-body">
           <div class="form-group">
             <label class="form-label" for="{{ form.name.id_for_label }}">Název</label>
@@ -13,7 +14,9 @@
           </div>
           <label for="{{ form.price.id_for_label }}" class="form-label">Cena</label>
           <div class="form-group input-group">
+            {% localize on %}
             {{ form.price }}
+            {% endlocalize %}
             <!--<input type="text" class="form-control" id="number_amount" name="amount" placeholder="Množství" value="">-->
             <div class="input-group-append">
               <span class="input-group-text">CZK</span>
@@ -30,6 +33,14 @@
           <div class="form-group">
             <label class="form-label" for="{{ form.units.id_for_label }}">Jednotky</label>
             {{ form.units }}
+          </div>
+
+          <div class="form-group">
+            <label class="form-label" for="{{ tag_form.tag.id_for_label }}">Tag</label>
+            {{ tag_form.tag }}
+          </div>
+          <div class="tag-container">
+
           </div>
         </div>
 

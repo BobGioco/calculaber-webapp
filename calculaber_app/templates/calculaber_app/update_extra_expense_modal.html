@@ -1,0 +1,35 @@
+<div class="modal fade" id="UpdateExtraExpense" tabindex="-1" role="dialog" aria-labelledby="Upravit výdaj" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title">Upravit výdaj</h5>
+
+      </div>
+      <form class="update_extra_expense" method="post" enctype="multipart/form-data">
+        <div class="modal-body">
+          <input class="form-control" id="extra_expense_id" name='id' type="text" value="" style="display: none;">
+          <div class="form-group">
+            <label for="update_expense_name" class="form-label">Název výdaje</label>
+            {{ update_form.name }}
+          </div>
+          <div class="form-group">
+            <label for="update_expense_description" class="form-label">Popis</label>
+            {{ update_form.description }}
+          </div>
+          <label class="form-label" for="update_expense_price">Cena</label>
+          <div class="form-group input-group">
+            {{ update_form.price }}
+            <div class="input-group-append">
+              <span class="input-group-text" id="price_format">CZK</span>
+            </div>
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-dismiss="modal">Zavřít</button>
+          <input type="submit" name="update_extra_expense_sub" class="btn btn-primary" value="Upravit">
+
+        </div>
+      </form>
+    </div>
+  </div>
+</div>

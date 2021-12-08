@@ -5,20 +5,18 @@
         <h5 class="modal-title">Upravit díl</h5>
 
       </div>
-      <form method="post" enctype="multipart/form-data">{% csrf_token %}
+      <form class ="update_material_object" method="post" enctype="multipart/form-data">
         <div class="modal-body">
             <input class="form-control" id="materialobject_id" name='id' type="text" value="" style="display: none;">
 
             <div class="form-group"> <!-- mb-3 -->
               <label class="form-label" for="id_name_update">Název</label>
               {{ update_form.name }}
-              <!--<input class="form-control" id="text_name" type="text" name="name" placeholder="Název" value="">-->
             </div>
 
             <label for="id_amount_update" class="form-label">Množství</label>
             <div class="form-group input-group">
               {{ update_form.amount }}
-              <!--<input type="text" class="form-control" id="number_amount" name="amount" placeholder="Množství" value="">-->
               <div class="input-group-append">
                 <span class="input-group-text" id="amount_units">m<sup>2</sup></span>
               </div>
@@ -26,7 +24,6 @@
 
             <div class="form-group form-check">
               {{ update_form.customized }}
-              <!--<input type="checkbox" class="form-check-input" name="customized" value="" id="checkbox_customized">--> <!-- add checked if flag is true -->
               <label class="form-check-label" for="id_customized_update">Customize price</label>
             </div>
 
@@ -35,7 +32,6 @@
                 <label class="form-label" for="id_price_update">Cena</label>
                 <div class="form-group input-group">
                   {{ update_form.price }}
-                  <!--<input class="form-control" id="number_price" type="number" placeholder="Cena" name="price" value="">-->
                   <div class="input-group-append">
                     <span class="input-group-text" id="price_format">CZK</span>
                   </div>
@@ -45,7 +41,6 @@
               <label for="id_margin_update" class="form-label">Margin</label>
               <div class="form-group input-group">
                 {{ update_form.margin }}
-                <!--<input type="number" class="form-control" id="number_margin" name="margin" placeholder="Margin" value="">-->
                 <div class="input-group-append">
                   <span class="input-group-text" id="margin_format">%</span>
                 </div>

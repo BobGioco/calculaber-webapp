@@ -5,15 +5,16 @@
         <h5 class="modal-title" id="ModatLabel">Duplikovat objekt</h5>
 
       </div>
-      <form method="POST" enctype="multipart/form-data">{% csrf_token %}
+      <form class="duplicate_object" method="POST" enctype="multipart/form-data">{% csrf_token %}
         <div class="modal-body">
-
           <div class="form-group">
+            <input class="form-control" id="object_search" type="text" name="" value="" placeholder="hledat..."></input>
+          </div>
+          <div class="form-group">
+
             <label for="ObjectSelect">Vyberte objekt, který chcete duplikovat.</label>
             <select class="form-control" id="ObjectSelect" name="select_object">
-              {% for item in list_all %}
-                <option value="{{ item.id }}">{{item.name}} - {{item.project.name}}</option>
-              {% endfor %}
+
             </select>
           </div>
 
