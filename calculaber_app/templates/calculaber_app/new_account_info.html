@@ -1,12 +1,25 @@
-{% extends "calculaber_app/base.html" %}
+{% extends "calculaber_app/main-layout.html" %}
 {% block body_block %}
 
-<div class="jumbotron">
-  <h1>{{ user.username }}</h1>
-  <p>Informace o účtu a pravidlech</p>
-  <a class="btn btn-secondary" role="button" href="{% url 'calculaber_app:index' %}" >
-    Pokračujte na hlavní stránkku
-  </a>
-</div>
+<div class="welcome">
 
+    <h1 class="welcome__title">Registrace</h1>
+
+    <div class="welcome__info">
+
+        <p class="welcome__subtitle">Klientské čislo</p>
+
+        <div class="welcome__field">
+            <p class="welcome__number">{{ user.username }}</p>
+        </div>
+
+        <p class="welcome__tip">Uložte si pro další použítí</p>
+
+    </div>
+
+    <a class="welcome__button button button--primary button--shadow" href="{% url 'calculaber_app:index' %}">Pokračovat</a>
+
+
+
+</div>
 {% endblock %}

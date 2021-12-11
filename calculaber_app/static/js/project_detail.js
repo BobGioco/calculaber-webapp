@@ -83,7 +83,7 @@ $(document).ready(function(){
         $("form.new_object div.tag-container")[0].innerHTML="";
         $('#DuplicateObject').modal('hide');
         document.getElementById("object-cards").innerHTML+=GenerateObjectCard(object_response[0].id,object_response[0].name,object_response[0].object_price,object_response[0].create_date);
-        $("h3.total_price")[0].innerHTML=FormatNumber(objects.map(item => item.object_price).reduce((prev, next) => Number(prev) + Number(next))) + " CZK";
+        $("span.total_price")[0].innerHTML=FormatNumber(objects.map(item => item.object_price).reduce((prev, next) => Number(prev) + Number(next)));
       }
     })
   });

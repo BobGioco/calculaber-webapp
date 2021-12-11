@@ -21,7 +21,7 @@ $(document).ready(function(){
         var row = document.getElementById(item_id);
         row.parentNode.removeChild(row);
         console.log(response_data);
-        $("h4 span.total_price").text(FormatNumber(extra_expense.map(item => item.price).reduce((prev, next) => Number(prev) + Number(next))) + " Kč")
+        $("span.total_price").text(FormatNumber(extra_expense.map(item => item.price).reduce((prev, next) => Number(prev) + Number(next))) + " Kč")
         console.log('done');
       }
     });
@@ -63,7 +63,7 @@ $(document).ready(function(){
 
         var to_update_data=extra_expense.findIndex(item => item.id === response_data['id']);
         extra_expense[to_update_data]=response_data;
-        $("h4 span.total_price").text(FormatNumber(extra_expense.map(item => item.price).reduce((prev, next) => Number(prev) + Number(next))) + " Kč")
+        $("span.total_price").text(FormatNumber(extra_expense.map(item => item.price).reduce((prev, next) => Number(prev) + Number(next))) + " Kč")
         console.log('done');
         $('#UpdateExtraExpense').modal('hide');
       }
@@ -89,17 +89,10 @@ $(document).ready(function(){
       success: function(response){
         response_data=response;
         var table = document.getElementById("extra_expense_detail_tbl").getElementsByTagName("tbody")[0];
-        tr="";
-        tr+="<tr id='" + response_data['id'] + "'>";
-        tr+="<td class='name'>"+response_data['name']+"</td>"+"<td class='description'>"+response_data['description']+"</td>"+"<td class='price'>"+FormatNumber(response_data['price'])+" Kč</td>";
-        tr+="<td>";
-        tr+="<button type='button' class='btn btn-primary update' data-toggle='modal' data-target='#UpdateExtraExpense'>Upravit</button>";
-        tr+="<form class='delete_extra_expense' method='POST'><input class='btn btn-danger' name='delete_extra_expense_sub' type='submit' onclick=\"return confirm('Opravdu chcete výdaj smazat?')\" value='Smazat'></form>";
-        tr+="</td>";
-        tr+='</tr>';
+        tr=GenerateNewRow(response_data['id'],response_data['name'],response_data['description'],response_data['price'])
         table.innerHTML+=tr;
         extra_expense.push(response_data);
-        $("h4 span.total_price").text(FormatNumber(extra_expense.map(item => item.price).reduce((prev, next) => Number(prev) + Number(next))) + " Kč")
+        $("span.total_price").text(FormatNumber(extra_expense.map(item => item.price).reduce((prev, next) => Number(prev) + Number(next))) + " Kč")
         console.log('done');
         $('#NewExtraExpense').modal('hide');
         CleanNewExpenseForm();

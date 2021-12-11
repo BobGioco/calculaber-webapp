@@ -1,39 +1,74 @@
-{% extends "calculaber_app/base.html" %}
+{% extends "calculaber_app/main-layout.html" %}
 {% block body_block %}
-{% load humanize %}
-<div class="">
-  <a href="{% url 'calculaber_app:index' %}">Projekty</a>
-  \
-  <a href="{% url 'project_detail'  pk=project.id %}">{{ project.name }}</a>\
-
-</div>
-<div class="jumbotron">
-  <h1>{{ project.name }}</h1>
-  <h3 class="total_price"></h3>q
-  <h4>{{ project.create_date }}</h4>
-  <button type="button" id="update_project_btn" class="btn btn-primary" data-toggle="modal" data-target="#UpdateProject">
-    Upravit
-  </button>
-  <a href="{% url 'project_delete' pk=project.id %}" class="btn btn-danger" role="button">Smazat</a>
-
+{% include "calculaber_app/navbar.html" %}
+<main>
+<div class="path">
+    <a href="{% url 'calculaber_app:index' %}" class="path__link">Projekty</a>
+    <p class="path__slash"> \ </p>
+    <a href="{% url 'project_detail'  pk=project.id %}" class="path__link path__link--active">{{ project.name }}</a>
 </div>
 
-  <div class="container-fluid">
-    <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#NewObject">
-      Nový objekt
-    </button>
-    <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#DuplicateObject">
-      Duplikovat objekt
-    </button>
-  </div>
-  <div id="object-cards" class="container-fluid">
+<header class="header">
 
-  </div>
+    <div class="header__top">
+
+        <div class="header__title-container">
+            <h1 class="header__title">{{ project.name }}</h1>
+        </div>
+
+
+        <div class="header__tools">
+            <div class="header__project-icons">
+
+              <button id="update_project_btn" class="icon-edit icon-edit--header" data-toggle="modal" data-target="#UpdateProject">
+                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" viewBox="0 0 16 16">
+                    <path d="M12.146.146a.5.5 0 0 1 .708 0l3 3a.5.5 0 0 1 0 .708l-10 10a.5.5 0 0 1-.168.11l-5 2a.5.5 0 0 1-.65-.65l2-5a.5.5 0 0 1 .11-.168l10-10zM11.207 2.5 13.5 4.793 14.793 3.5 12.5 1.207 11.207 2.5zm1.586 3L10.5 3.207 4 9.707V10h.5a.5.5 0 0 1 .5.5v.5h.5a.5.5 0 0 1 .5.5v.5h.293l6.5-6.5zm-9.761 5.175-.106.106-1.528 3.821 3.821-1.528.106-.106A.5.5 0 0 1 5 12.5V12h-.5a.5.5 0 0 1-.5-.5V11h-.5a.5.5 0 0 1-.468-.325z"/>
+                </svg>
+              </button>
+
+              <a class="icon-remove icon-remove--header" href="{% url 'project_delete' pk=project.id %}" role="button">
+                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" viewBox="0 0 16 16">
+                    <path d="M5.5 5.5A.5.5 0 0 1 6 6v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5zm2.5 0a.5.5 0 0 1 .5.5v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5zm3 .5a.5.5 0 0 0-1 0v6a.5.5 0 0 0 1 0V6z"/>
+                    <path fill-rule="evenodd" d="M14.5 3a1 1 0 0 1-1 1H13v9a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V4h-.5a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1H6a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1h3.5a1 1 0 0 1 1 1v1zM4.118 4 4 4.059V13a1 1 0 0 0 1 1h6a1 1 0 0 0 1-1V4.059L11.882 4H4.118zM2.5 3V2h11v1h-11z"/>
+                </svg>
+              </a>
+
+            </div>
+
+            <div class="header__object-icons">
+              <button class="icon-duplicate" data-toggle="modal" data-target="#DuplicateObject">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" class="duplicate" viewBox="0 0 16 16">
+                        <path d="M1.5 0A1.5 1.5 0 0 0 0 1.5V13a1 1 0 0 0 1 1V1.5a.5.5 0 0 1 .5-.5H14a1 1 0 0 0-1-1H1.5z"/>
+                        <path d="M3.5 2A1.5 1.5 0 0 0 2 3.5v11A1.5 1.5 0 0 0 3.5 16h6.086a1.5 1.5 0 0 0 1.06-.44l4.915-4.914A1.5 1.5 0 0 0 16 9.586V3.5A1.5 1.5 0 0 0 14.5 2h-11zM3 3.5a.5.5 0 0 1 .5-.5h11a.5.5 0 0 1 .5.5V9h-4.5A1.5 1.5 0 0 0 9 10.5V15H3.5a.5.5 0 0 1-.5-.5v-11zm7 11.293V10.5a.5.5 0 0 1 .5-.5h4.293L10 14.793z"/>
+                    </svg>
+              </button>
+              <button class="header__icon-new" data-toggle="modal" data-target="#NewObject">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="icon-new" width="40" height="40" fill="currentColor" class="bi bi-plus-circle-fill" viewBox="0 0 16 16">
+                        <path d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0zM8.5 4.5a.5.5 0 0 0-1 0v3h-3a.5.5 0 0 0 0 1h3v3a.5.5 0 0 0 1 0v-3h3a.5.5 0 0 0 0-1h-3v-3z"/>
+                    </svg>
+              </button>
+            </div>
+        </div>
+    </div>
+
+
+    <div class="header__bottom">
+        <p class="header__price">Celková cena <strong><span class="total_price"></span></strong> Kč</p>
+    </div>
+
+
+</header>
+
+<div class="gallery" id="object-cards">
+
+</div>
+
 
 {% include "calculaber_app/update_project_modal.html" %}
 {% include "calculaber_app/new_object_modal.html" %}
 {% include "calculaber_app/duplicate_object_modal.html" %}
 {% csrf_token %}
+</main>
 {% endblock %}
 
 {% block jquery %}
@@ -57,30 +92,37 @@
   var tag_array= {{ tag_list|safe }};
   var new_tag_array=[];
   function GenerateObjectCard(id,name,price,date){
-    html_txt='';
-    html_txt+="<div class='card' style='width: 18rem;'>";
-    html_txt+="<div class='card-body'>";
-    html_txt+="<h5 class='card-title'>" + name +"</h5>";
-    html_txt+="<p class='card-text'>Cena " + FormatNumber(price) +" CZK</p>";
-    html_txt+="<p class='card-text'>" + date + "</p>";
-    html_txt+="<a href=" + object_path.replace('0',id) + " class='btn btn-primary stretched-link'>Detail</a>";
+    html_txt="<a href=" + object_path.replace('0',id) + " class='gallery__card'>";
+    html_txt+="<div class='gallery__image'><img src='/media/images/kitchen.jpg' class='gallery__user-image' alt='image'></div>";
+    html_txt+="<div class='gallery__info'>";
+    html_txt+="<div class='gallery__title gallery__title--flex'>"
+    html_txt+="<p class='gallery__title--name'>" + name + "</p>"
+    html_txt+="<p class='gallery__title--price'>" + FormatNumber(price) + " Kč</p>"
+    html_txt+="</div>"
+    html_txt+="<div class='tag__gallery'>";
+    tag_array.filter(item => item.object_id === id).forEach(i=>{
+      html_txt+="<div class='tags-box'><p class='tag'>" + i.tag + "</p></div>"
+    });
     html_txt+="</div>";
     html_txt+="</div>";
+    html_txt+="</a>";
     return html_txt;
   };
   function GenerateExtraExpenseCard(price){
-    html_txt+="<div id='extra_expense' class='card' style='width: 18rem;'>";
-    html_txt+="<div class='card-body'>";
-    html_txt+="<h5 class='card-title'>Další náklady</h5>";
-    html_txt+="<p class='card-text'>Cena " + FormatNumber(price) + " CZK</p>";
-    html_txt+="<a href=" + extra_expense_path + " class='btn btn-primary stretched-link'>Detail</a>";
+    html_txt="<a href=" + extra_expense_path + " class='gallery__card'>";
+    html_txt+="<div class='gallery__image'><img src='media/images/kitchen.jpg' class='gallery__user-image' alt='image'></div>";
+    html_txt+="<div class='gallery__info'>";
+    html_txt+="<div class='gallery__title gallery__title--flex'>"
+    html_txt+="<p class='gallery__title--name'>Další náklady</p>"
+    html_txt+="<p class='gallery__title--price'>" + FormatNumber(price) + " Kč</p>"
+    html_txt+="</div>"
     html_txt+="</div>";
-    html_txt+="</div>";
+    html_txt+="</a>";
     return html_txt;
   };
   document.addEventListener("DOMContentLoaded", function() {
       var container = document.getElementById("object-cards");
-      $("h3.total_price")[0].innerHTML=FormatNumber(objects.map(item => item.object_price).reduce((prev, next) => Number(prev) + Number(next))) + " CZK";
+      $("span.total_price")[0].innerHTML=FormatNumber(objects.map(item => item.object_price).reduce((prev, next) => Number(prev) + Number(next)));
       //table.innerHTML="";
       var tr="";
       //console.log(container);
@@ -89,6 +131,7 @@
       });
       container.innerHTML+=tr;
       container.innerHTML+=GenerateExtraExpenseCard(extra_expense.map(item => Number(item.price)).reduce((prev, next) => prev + next));
+      container.innerHTML+="<button id='update_project_btn' data-toggle='modal' data-target='#UpdateProject'><div class='gallery__card gallery__card--new'><p class='gallery__title--center'>+ Nový objekt</p></div></button>";
     });
 </script>
 

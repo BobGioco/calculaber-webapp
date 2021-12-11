@@ -1,21 +1,43 @@
-{% extends "calculaber_app/base.html" %}
+{% extends "calculaber_app/main-layout.html" %}
 {% block body_block %}
-<style>
-  .error_msg {color:red;}
-</style>
-<div class="jumbotron">
-  <h1>Prosím přihlaště se</h1>
-  <form action="{% url 'users_app:user_login' %}" method="post">
-    {% csrf_token %}
+<div class="navbar  navbar--light">
 
-    <label for="username">Uživatelské číslo: </label>
-    <input type="text" name="username" placeholder="Enter username">
-    <input type="submit" name="" value="Login">
-    <br>
-    <div class="error_msg">
-      <p>{{ failed_msg }}</p>
+    <div class="navbar__link-box navbar__link-box--hide navbar__link-box--border-right">
+
+        <a href="{% url 'users_app:user_login' %}" class="navbar__link navbar__link--dark navbar__link--highlight"><span class="highlight">Přihlášení</span></a>
+
     </div>
 
-  </form>
+    <div class="navbar__link-box">
+
+        <a href="{% url 'users_app:generate_account' %}" class="navbar__link navbar__link--dark navbar__link--highlight"><span class="highlight">Registrace</span></a>
+
+    </div>
+
 </div>
+
+
+
+<div class="welcome">
+
+    <h1 class="welcome__title">Přihlašení</h1>
+
+    <div class="welcome__info">
+
+      <form action="{% url 'users_app:user_login' %}" method="post">
+        {% csrf_token %}
+        <p class="welcome__subtitle">Klientské čislo</p>
+        <input type="text" class="welcome__field welcome__input" name="username" id="client id" required>
+        <button type="submit" class="welcome__button button button--primary button--shadow">Pokračovat</button>
+      </form>
+
+    </div>
+</div>
+
+
+
+
+
+
+
 {% endblock %}

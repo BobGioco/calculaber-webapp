@@ -1,51 +1,88 @@
-{% extends "calculaber_app/base.html" %}
+{% extends "calculaber_app/main-layout.html" %}
 {% block body_block %}
-<div class="link">
-  <a href="{% url 'calculaber_app:index' %}">Projekty</a>
-  \
-  <a href="{% url 'project_detail'  pk=object_info.project_id %}">{{ object_info.project__name }}</a>
-  \
-  <a href="{% url 'object_detail'  pk1=object_info.project_id  pk2=object_info.id %}">{{ object_info.name }}</a>
-  \
-
-</div>
-<div class="jumbotron">
-  <h2 class="object_name">{{ object_info.name }}</h2>
-  <h4 class="total_object_price"></h4>
-  <div class="tag_container">
-
+{% include "calculaber_app/navbar.html" %}
+<main>
+  <div class="path">
+      <a href="{% url 'calculaber_app:index' %}" class="path__link">Projekty</a>
+      <p class="path__slash"> / </p>
+      <a href="{% url 'project_detail'  pk=object_info.project_id %}" class="path__link">{{ object_info.project__name }}</a>
+      <p class="path__slash"> / </p>
+      <a href="{% url 'object_detail'  pk1=object_info.project_id  pk2=object_info.id %}" class="path__link path__link--active">{{ object_info.name }}</a>
   </div>
-  <a href="{% url 'project_detail' pk=object_info.project_id %}" class="btn btn-info" role="button">Zpět na projekt</a>
-  <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#UpdateObject">
-    Upravit
+  <header class="header">
+
+      <div class="header__top">
+
+          <div class="header__title-container">
+              <h1 class="header__title">{{ object_info.name }}</h1>
+          </div>
+
+
+          <div class="header__tools">
+
+              <div class="header__project-icons">
+                <button id="update_project_btn" class="icon-edit icon-edit--header" data-toggle="modal" data-target="#UpdateObject">
+                  <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" viewBox="0 0 16 16">
+                    <path d="M12.146.146a.5.5 0 0 1 .708 0l3 3a.5.5 0 0 1 0 .708l-10 10a.5.5 0 0 1-.168.11l-5 2a.5.5 0 0 1-.65-.65l2-5a.5.5 0 0 1 .11-.168l10-10zM11.207 2.5 13.5 4.793 14.793 3.5 12.5 1.207 11.207 2.5zm1.586 3L10.5 3.207 4 9.707V10h.5a.5.5 0 0 1 .5.5v.5h.5a.5.5 0 0 1 .5.5v.5h.293l6.5-6.5zm-9.761 5.175-.106.106-1.528 3.821 3.821-1.528.106-.106A.5.5 0 0 1 5 12.5V12h-.5a.5.5 0 0 1-.5-.5V11h-.5a.5.5 0 0 1-.468-.325z"/>
+                  </svg>
+                </button>
+                <a class="icon-remove icon-remove--header" href="{% url 'object_delete' pk=object_info.id %}" role="button">
+                  <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" viewBox="0 0 16 16">
+                    <path d="M5.5 5.5A.5.5 0 0 1 6 6v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5zm2.5 0a.5.5 0 0 1 .5.5v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5zm3 .5a.5.5 0 0 0-1 0v6a.5.5 0 0 0 1 0V6z"/>
+                    <path fill-rule="evenodd" d="M14.5 3a1 1 0 0 1-1 1H13v9a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V4h-.5a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1H6a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1h3.5a1 1 0 0 1 1 1v1zM4.118 4 4 4.059V13a1 1 0 0 0 1 1h6a1 1 0 0 0 1-1V4.059L11.882 4H4.118zM2.5 3V2h11v1h-11z"/>
+                  </svg>
+                </a>
+              </div>
+
+
+
+              <div class="header__object-icons">
+                <button class="header__icon-new" type="button" data-toggle="modal" data-target="#NewMaterialObject">
+                  <svg xmlns="http://www.w3.org/2000/svg" class="icon-new" width="40" height="40" fill="currentColor" class="bi bi-plus-circle-fill" viewBox="0 0 16 16">
+                    <path d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0zM8.5 4.5a.5.5 0 0 0-1 0v3h-3a.5.5 0 0 0 0 1h3v3a.5.5 0 0 0 1 0v-3h3a.5.5 0 0 0 0-1h-3v-3z"/>
+                  </svg>
+                </button>
+              </div>
+
+          </div>
+      </div>
+      <div class="header__bottom">
+        <div class="tag__header">
+
+        </div>
+      </div>
+      <div class="header__bottom">
+          <p class="header__price">Celková cena <strong><span class="total_object_price"></span></strong> CZK</p>
+      </div>
+
+
+  </header>
+
+  <table class="table-object" id="object_detail_tbl">
+    <thead>
+      <tr class="table-object__head">
+        <th scope="table-object__item">Díl</th>
+        <th scope="table-object__amount">Množství</th>
+        <th scope="table-object__material">Materiál</th>
+        <th scope="table-object__price">Cena materiálu</th>
+        <th scope="table-object__margin">Margin</th>
+        <th scope="table-object__overall-price">Finální cena</th>
+      </tr>
+    </thead>
+    <tbody>
+
+    </tbody>
+  </table>
+
+  <button class="table__new" title="dil" data-toggle="modal" data-target="#NewMaterialObject">
+    <p class="table__new--text">+ Nový díl</p>
   </button>
-  <a href="{% url 'object_delete' pk=object_info.id %}" class="btn btn-danger" role="button">Smazat</a>
-</div>
-<table class="table" id="object_detail_tbl">
-  <thead>
-    <tr>
-      <th scope="col">Díl</th>
-      <th scope="col">Množství</th>
-      <th scope="col">Materiál</th>
-      <th scope="col">Cena materiálu</th>
-      <th scope="col">Margin</th>
-      <th scope="col">Finální cena</th>
-      <th></th>
-    </tr>
-  </thead>
-  <tbody>
+  {% csrf_token %}
+  {% include "calculaber_app/update_material_object_modal.html" %}
+  {% include "calculaber_app/new_material_object_modal.html" %}
+  {% include "calculaber_app/update_object_modal.html" %}
 
-  </tbody>
-</table>
-<button title="dil" type="button" class="btn btn-primary" data-toggle="modal" data-target="#NewMaterialObject">
-  Nový díl
-</button>
-{% csrf_token %}
-{% include "calculaber_app/update_material_object_modal.html" %}
-{% include "calculaber_app/new_material_object_modal.html" %}
-{% include "calculaber_app/update_object_modal.html" %}
-
-
+</main>
 {% endblock %}
 {% block jquery %}
 {% load static %}
@@ -66,30 +103,34 @@
   var material= {{ material_json|safe }};
   var units= {{ units_list|safe }};
   var new_tag_array=[];
+  var edit_button_content="<div class='icon-edit'><svg xmlns='http://www.w3.org/2000/svg' width='16' height='16' fill='currentColor' viewBox='0 0 16 16'><path d='M12.146.146a.5.5 0 0 1 .708 0l3 3a.5.5 0 0 1 0 .708l-10 10a.5.5 0 0 1-.168.11l-5 2a.5.5 0 0 1-.65-.65l2-5a.5.5 0 0 1 .11-.168l10-10zM11.207 2.5 13.5 4.793 14.793 3.5 12.5 1.207 11.207 2.5zm1.586 3L10.5 3.207 4 9.707V10h.5a.5.5 0 0 1 .5.5v.5h.5a.5.5 0 0 1 .5.5v.5h.293l6.5-6.5zm-9.761 5.175-.106.106-1.528 3.821 3.821-1.528.106-.106A.5.5 0 0 1 5 12.5V12h-.5a.5.5 0 0 1-.5-.5V11h-.5a.5.5 0 0 1-.468-.325z'/></svg></div>";
+  var remove_button_content="<div class='icon-remove'><svg xmlns='http://www.w3.org/2000/svg' width='16' height='16' fill='currentColor' viewBox='0 0 16 16'><path d='M5.5 5.5A.5.5 0 0 1 6 6v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5zm2.5 0a.5.5 0 0 1 .5.5v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5zm3 .5a.5.5 0 0 0-1 0v6a.5.5 0 0 0 1 0V6z'/><path fill-rule='evenodd' d='M14.5 3a1 1 0 0 1-1 1H13v9a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V4h-.5a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1H6a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1h3.5a1 1 0 0 1 1 1v1zM4.118 4 4 4.059V13a1 1 0 0 0 1 1h6a1 1 0 0 0 1-1V4.059L11.882 4H4.118zM2.5 3V2h11v1h-11z'/></svg></div>";
   function GenerateRow(id,name,material_name,amount,units_id,price,margin,total_price){
-    html_txt="<tr id=" + id + ">";
-    html_txt+="<td class='name'>" + name + "</td>";
+    html_txt="<tr class='table-object__data' id=" + id + ">"
+    html_txt+="<td class='table-object__item name'>"+ name + "</td>"
     if(units[units_id]==="m2"){
-      html_txt+="<td class='amount'>" + FormatNumber(amount) + "m<sup>2</sup></td>";
+      html_txt+="<td class='table-object__amount amount'>" + FormatNumber(amount) + "m<sup>2</sup></td>";
     }else if (units[units_id]==="m3") {
-      html_txt+="<td class='amount'>" + FormatNumber(amount) + "m<sup>3</sup></td>";
+      html_txt+="<td class='table-object__amount amount'>" + FormatNumber(amount) + "m<sup>3</sup></td>";
     }else {
-      html_txt+="<td class='amount'>" + FormatNumber(amount) + " " + units[units_id] + "</td>";
+      html_txt+="<td class='table-object__amount amount'>" + FormatNumber(amount) + " " + units[units_id] + "</td>";
     };
-    html_txt+="<td class='material-name'>" + material_name + "</td>";
-    html_txt+="<td class='price'>" + FormatNumber(price) + " Kč</td>";
-    html_txt+="<td class='margin'>" + FormatNumber(margin) + " %</td>";
-    html_txt+="<td class='total'>" + FormatNumber(total_price) + " Kč</td>";
-    html_txt+="<td>";
-    html_txt+="<button type='button' class='btn btn-primary update' data-toggle='modal' data-target='#UpdateMaterialObject'>Upravit</button>";
-    html_txt+="<form class='delete_materialobject' method='POST'><input class='btn btn-danger' type='submit' onclick=\"return confirm('Opravdu chcete díl smazat?')\" value='Smazat'></form>";
+    html_txt+="<td class='material-name name'>" + material_name + "</td>";
+    html_txt+="<td class='table-object__price price'>" + FormatNumber(price) + " Kč</td>";
+    html_txt+="<td class='table-object__margin margin'>" + FormatNumber(margin) + " %</td>";
+    html_txt+="<td class='table-object__overall-price total'>" + FormatNumber(total_price) + " Kč</td>";
+    html_txt+="<td class='icon'>";
+    html_txt+="<button type='button'class='update' data-toggle='modal' data-target='#UpdateMaterialObject'>" + edit_button_content + "</button>";
+    html_txt+="<form class='delete_materialobject' method='POST'><button type='submit' onclick=\"return confirm('Opravdu chcete díl smazat?')\" value='Smazat'>" + remove_button_content + "</button></form>";
     html_txt+="</td>"
     return html_txt;
+
+
   };
   function GenerateTags(tag_array){
     var tags='';
     tag_array.forEach(i=>{
-      tags+="<span class='badge rounded-pill bg-warning text-dark'>" + i.tag + "</span>";
+      tags+="<div class='tag-box'><p class='tag'>" + i.tag + "</p></div>";
     });
     return tags;
   };
@@ -109,11 +150,11 @@
       });
       table.innerHTML+=tr;
       if(materialobjects.length>0){
-        $('h4.total_object_price')[0].innerHTML=FormatNumber(materialobjects.map(item => item.total_price).reduce((prev, next) => Number(prev) + Number(next))) + " Kč"
+        $('span.total_object_price')[0].innerHTML=FormatNumber(materialobjects.map(item => item.total_price).reduce((prev, next) => Number(prev) + Number(next))) + " Kč"
       }else {
-        $('h4.total_object_price')[0].innerHTML=FormatNumber(0) + " Kč"
+        $('span.total_object_price')[0].innerHTML=FormatNumber(0) + " Kč"
       }
-      $("div.tag_container")[0].innerHTML=GenerateTags(object_tags);
+      $("div.tag__header")[0].innerHTML=GenerateTags(object_tags);
     });
 </script>
 <script type="text/javascript" src="{% static 'js/object_detail.js' %}" charset="utf-8"></script>

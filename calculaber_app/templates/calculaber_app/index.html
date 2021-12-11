@@ -1,42 +1,54 @@
-{% extends "calculaber_app/base.html" %}
+{% extends "calculaber_app/main-layout.html" %}
 {% block body_block %}
 
+<div class="navbar  navbar--light">
 
-{% if user.is_authenticated %}
-  <div class="">
-    <a href="{% url 'calculaber_app:index' %}">Projekty</a> \
-  </div>
+    <div class="navbar__link-box">
 
-  <div class="jumbotron">
-    <h2>{{ user.username }}</h2>
-    <br>
-    <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#NewProject">
-      Nový projekt
-    </button>
-    <a href="{% url 'calculaber_app:material_list' %}" class="btn btn-info" role="button">Materiály</a>
-  </div>
+        <a href="{% url 'users_app:user_login' %}" class="navbar__link navbar__link--dark navbar__link--highlight"><span class="highlight">Přihlášení</span></a>
 
-  {% for projects in projects %}
-    <div class="card" style="width: 18rem;">
-      <img src="media/{{projects.project_pic}}" class="card-img-top" alt="Responsive image">
-      <div class="card-body">
-        <h5 class="card-title">{{projects.name}}</h5>
-        <p class="card-text">{{projects.create_date}}</p>
-        <a href="{% url 'project_detail' pk=projects.pk %}" class="btn btn-primary stretched-link">Detail</a>
-      </div>
     </div>
 
-  {% endfor %}
+    <div class="navbar__link-box navbar__link-box--border-left navbar__link-box--hide">
 
-  {% include "calculaber_app/new_project_modal.html" %}
-{% else %}
-  <div class="jumbotron">
-    <h1> continue</h1>
-  </div>
-{% endif %}
-{% endblock %}
+        <a href="{% url 'users_app:generate_account' %}" class="navbar__link navbar__link--dark navbar__link--highlight"><span class="highlight">Registrace</span></a>
 
-{% block jquery %}
-{% load static %}
-<script type="text/javascript" src="{% static 'js/new_project.js' %}" charset="utf-8"></script>
+    </div>
+
+</div>
+
+
+
+<div class="hero">
+
+
+    <img src="/media/logo/calculaber-logo.svg" class="hero__logo" alt="logo">
+
+
+    <h1 class="hero__title">calculaber</h1>
+
+
+    <a href="{% url 'users_app:generate_account' %}" class="hero__button button button--primary button--shadow">ZAČIT</a>
+
+
+</div>
+
+
+
+<div class="value-prop">
+
+    <h2 class="value-prop__title"><span class="highlight">Lorem Ipsum</span></h2>
+
+    <p class="value-prop__text">Lorem ipsum dolor sit amet consectetur adipisicing elit.</p>
+
+    <img src="#" class="value-prop__screenshot" alt="screenshot">
+
+</div>
+
+
+
+
+
+
+
 {% endblock %}

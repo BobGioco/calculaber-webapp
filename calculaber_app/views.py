@@ -10,19 +10,22 @@ from django.core.serializers.json import DjangoJSONEncoder
 import json
 
 def index(request):
-    if request.method=="POST":
-        project_form=forms.CreateProjectForm(request.POST, request.FILES)
-        if project_form.is_valid():
-            obj = models.Project()
-            obj.name=project_form.cleaned_data.get("name")
-            obj.project_pic=project_form.cleaned_data.get("project_pic")
-            obj.user_id=request.user.id
-            obj.save()
+    if request.user.is_authenticated:
+        if request.method=="POST":
+            project_form=forms.CreateProjectForm(request.POST, request.FILES)
+            if project_form.is_valid():
+                obj = models.Project()
+                obj.name=project_form.cleaned_data.get("name")
+                obj.project_pic=project_form.cleaned_data.get("project_pic")
+                obj.user_id=request.user.id
+                obj.save()
 
-            return HttpResponseRedirect(request.path_info)
+                return HttpResponseRedirect(request.path_info)
 
-    projects=models.Project.objects.filter(user=request.user.id)
-    return render(request,'calculaber_app/index.html',{'form':forms.CreateProjectForm,'projects':projects})
+        projects=models.Project.objects.filter(user=request.user.id)
+        return render(request,'calculaber_app/project_list.html',{'form':forms.CreateProjectForm,'projects':projects})
+    else:
+        return render(request,'calculaber_app/index.html')
 
 @login_required
 def account_info(request):

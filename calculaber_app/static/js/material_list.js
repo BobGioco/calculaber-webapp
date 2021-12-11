@@ -77,7 +77,7 @@ $(document).ready(function(){
           tag_array.push(x);
           tr+="<span class='badge rounded-pill bg-warning text-dark'>" + x.tag + "</span>";
         });
-        $('#' + response_data['id'] + " td.tag").html(tr);
+        $('#' + response_data['id'] + " td.table-material__tags").html(tr);
         var to_update_data=material.findIndex(item => item.id === response_data['id']);
         material[to_update_data]=response_data;
         console.log($('#' + response_data['id'] + " td.name").text());
@@ -109,18 +109,18 @@ $(document).ready(function(){
         response_data=response;
         var table = document.getElementById("mydatatable").getElementsByTagName("tbody")[0];
         tr="";
-        tr+="<tr id='" + response_data['id'] + "'>";
-        tr+="<td class='name'>"+response_data['name']+'</td>'+"<td class='margin'>"+FormatNumber(response_data['margin'])+' %</td>'+"<td class='price'>"+FormatNumber(response_data['price'])+' Kč</td>'+"<td class='units'>"+choice_array[response_data['units']]+'</td>'
-        tr+="<td>";
+        tr+="<tr class='table-material__data' id='" + response_data['id'] + "'>";
+        tr+="<td class='table-material__item name'>"+response_data['name']+'</td>'+"<td class='table-material__margin margin'>"+FormatNumber(response_data['margin'])+' %</td>'+"<td class='table-material__price price'>"+FormatNumber(response_data['price'])+' Kč</td>'+"<td class='table-material__units units'>"+choice_array[response_data['units']]+'</td>'
+        tr+="<td class='table-material__tags'>";
         JSON.parse(response_data['tag_list']).forEach(x=>{
           console.log(x.tag);
           tr+="<span class='badge rounded-pill bg-warning text-dark'>" + x.tag;
           tr+="</span>";
         });
         tr+="</td>";
-        tr+="<td>"
-        tr+="<button type='button' class='btn btn-primary update' data-toggle='modal' data-target='#UpdateMaterial'>Upravit</button>"
-        tr+="<form class='delete_material' method='POST'><input class='btn btn-danger' name='delete_material_sub' type='submit' onclick=\"return confirm('Opravdu chcete materiál smazat?')\" value='Smazat'></form>";
+        tr+="<td class='icon'>"
+        tr+="<button class='update' data-toggle='modal' data-target='#UpdateMaterial'>" + edit_button_content + "</button>";
+        tr+="<form class='delete_material' method='POST'><button class='remove' name='delete_material_sub' type='submit' onclick=\"return confirm('Opravdu chcete materiál smazat?')\">" + remove_button_content + "</button></form>";
         tr+="</td>"
         tr+='</tr>'
         table.innerHTML+=tr;

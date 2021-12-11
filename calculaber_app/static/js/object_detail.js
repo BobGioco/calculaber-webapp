@@ -61,7 +61,7 @@ $(document).ready(function(){
         }
         $('tr#' + response_data['id'] + " td.total").text(FormatNumber(response_data['total_price']) + ' Kč');
 
-        $('h4.total_object_price')[0].innerHTML=FormatNumber(materialobjects.map(item => item.total_price).reduce((prev, next) => Number(prev) + Number(next))) + " Kč";
+        $('span.total_object_price')[0].innerHTML=FormatNumber(materialobjects.map(item => item.total_price).reduce((prev, next) => Number(prev) + Number(next))) + " Kč";
         console.log('materialobject update');
         console.log('done');
         $('#UpdateMaterialObject').modal('hide');
@@ -95,12 +95,12 @@ $(document).ready(function(){
   }
 
 
-  $("#NewMaterialObject input#material_select").on("keydown",function search(e) {
+  $("#NewMaterialObject input#material_search").on("keydown",function search(e) {
     if(e.keyCode == 13) {
       e.preventDefault();
     };
   });
-  $("#NewMaterialObject input#material_select").on("keyup",function search(e) {
+  $("#NewMaterialObject input#material_search").on("keyup",function search(e) {
     e.preventDefault();
     console.log($(this).val());
     if(e.keyCode == 13) {
@@ -170,6 +170,7 @@ $(document).ready(function(){
         table.innerHTML+=GenerateRow(response_data['id'],response_data['name'],response_data['material__name'],response_data['amount'],response_data['material__units'],response_data['material__price'],response_data['material__margin'],response_data['total_price']);
         materialobjects.push(response_data);
         console.log('done');
+        $('span.total_object_price')[0].innerHTML=FormatNumber(materialobjects.map(item => item.total_price).reduce((prev, next) => Number(prev) + Number(next))) + " Kč";
         $('#NewMaterialObject').modal('hide');
         CleanNewMaterialObjectForm();
       }
@@ -255,13 +256,12 @@ $(document).ready(function(){
       success: function(response){
         response_data=response;
         object.name=response_data.name;
-        $('h2.object_name').text(object.name);
+        $('h1.header__title').text(object.name);
         tr="";
         JSON.parse(response_data['tag_list']).forEach(x=>{
-          tr+="<span class='badge rounded-pill bg-warning text-dark'>" + x.tag;
-          tr+="</span>";
+          tr+="<div class='tag-box'><p class='tag'>" + x.tag + "</p></div>"
         });
-        $('div.tag_container')[0].innerHTML=tr;
+        $('div.tag__header')[0].innerHTML=tr;
         object_tags=JSON.parse(response_data['tag_list']);
         console.log('done');
         $('#UpdateObject').modal('hide');

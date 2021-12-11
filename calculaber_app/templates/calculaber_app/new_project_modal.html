@@ -5,7 +5,7 @@
         <h5 class="modal-title" id="exampleModalLabel">Nový projekt</h5>
 
       </div>
-      <form method="post" enctype="multipart/form-data">{% csrf_token %}
+      <form class="new-project" method="post" enctype="multipart/form-data">
         <div class="modal-body">
 
           <div class="form-group">
@@ -23,8 +23,8 @@
 
 
         <div class="modal-footer">
-          <button type="button" class="btn btn-secondary" data-dismiss="modal">Zavřít</button>
-          <input type="submit" class="btn btn-primary" value="Začít projekt">
+          <button type="button" class="button button--secondary" data-dismiss="modal">Zavřít</button>
+          <button type="submit" class="button button--primary">Začít</button>
 
         </div>
       </form>

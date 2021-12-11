@@ -1,0 +1,79 @@
+@use 'variables';
+@use 'mixins';
+
+
+
+.header {
+    padding: 25px 0 40px 0;
+    text-align: left;
+
+    &--flex {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding-right: 23px;
+    }
+
+    &__top {
+        margin: 0;
+        padding: 0;
+
+        @include mixins.tablet {
+            display: flex;
+        }
+    }
+  
+
+    &__title {
+        font-weight: normal;  
+    }
+
+    &__tools {
+        display: flex;
+        flex-grow: 1;
+        justify-content: space-between;
+        align-items: center;
+        margin-top: 18px;
+        padding-right: 23px;
+
+        @include mixins.tablet {
+            margin-top: 0px;
+        }
+    }
+
+
+
+    &__project-icons {
+        display: flex;
+
+        .icon-edit--header {
+            margin: 0 3px 0 0;
+
+            @include mixins.tablet {
+                margin-left: 10px;
+            }
+        }
+
+    }
+
+
+    &__object-icons {
+        display: flex;
+        align-items: flex-start;
+        justify-content: center;
+    }
+
+
+
+    &__price {
+        display: inline-block;
+        margin-top: 20px;
+        margin-bottom: 20px;
+        padding: 5px;
+        font-size: 14px;
+        background-color: variables.$color-secondary;
+        border-radius: 10px;
+        color: white;
+    }
+
+}

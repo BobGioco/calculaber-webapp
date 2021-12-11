@@ -1,0 +1,25 @@
+@use 'variables';
+@use 'mixins';
+
+.danger {
+
+    &__container {
+        max-width: 500px;
+        margin-top: 60px;
+        padding: 50px;
+        text-align: center;
+        // border: 1px solid variables.$color-button--dark;
+        // border-radius: 10px;
+        // box-shadow: 5px 5px 5px variables.$color-objects--shade;
+
+        @include mixins.tablet {
+            padding-top: 80px;
+        }
+    }
+
+    &__message {
+        padding-top: 60px;
+        padding-bottom: 40px;
+        font-size: 20px;
+    }
+}

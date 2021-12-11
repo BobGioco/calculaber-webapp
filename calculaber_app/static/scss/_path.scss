@@ -1,0 +1,24 @@
+@use 'variables';
+
+.path {
+    padding: 20px 0;
+    display: flex;
+
+    &__link,
+    &__slash {
+      color: variables.$color-text-secondary;
+      font-size: 14px;
+      padding: 0 5px;
+    }
+
+    &__link {
+      &--active {
+        font-weight: bold;
+      }
+
+      &:hover {
+        text-decoration: underline;
+        color: variables.$color-text-secondary;
+      }
+    }
+  }

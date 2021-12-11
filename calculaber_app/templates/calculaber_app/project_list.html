@@ -1,0 +1,51 @@
+{% extends "calculaber_app/main-layout.html" %}
+{% block body_block %}
+{% include "calculaber_app/navbar.html" %}
+<main>
+  {% csrf_token %}
+  <div class="path">
+      <a href="{% url 'calculaber_app:index' %}" class="path__link path__link--active">Projekty</a>
+  </div>
+
+
+  <header class="header header--flex">
+
+      <h1 class="header__title">Projekty</h1>
+      <button data-toggle="modal" data-target="#NewProject">
+        <svg xmlns="http://www.w3.org/2000/svg" class="icon-new" width="40" height="40" fill="currentColor" class="bi bi-plus-circle-fill" viewBox="0 0 16 16">
+            <path d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0zM8.5 4.5a.5.5 0 0 0-1 0v3h-3a.5.5 0 0 0 0 1h3v3a.5.5 0 0 0 1 0v-3h3a.5.5 0 0 0 0-1h-3v-3z"/>
+        </svg>
+      </button>
+
+
+  </header>
+
+  <div class="gallery">
+
+  {% for projects in projects %}
+      <a href="{% url 'project_detail' pk=projects.pk %}" class="gallery__card">
+
+          <div class="gallery__image">
+              <img src="media/{{projects.project_pic}}" class="gallery__user-image" alt="image">
+          </div>
+
+          <div class="gallery__title">
+              <p class="gallery__title--name">{{projects.name}}</p>
+          </div>
+      </a>
+
+  {% endfor %}
+  {# divide the gallery into cards and the new #}
+    <button data-toggle="modal" data-target="#NewProject">
+      <div class="gallery__card gallery__card--new">
+          <p class="gallery__title--center">+ Nový projekt</p>
+      </div>
+    </button>
+ {% include "calculaber_app/new_project_modal.html" %}
+</main>
+
+{% endblock %}
+{% block jquery %}
+{% load static %}
+<script type="text/javascript" src="{% static 'js/new_project.js' %}" charset="utf-8"></script>
+{% endblock %}

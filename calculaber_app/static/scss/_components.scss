@@ -1,0 +1,185 @@
+@use 'variables';
+@use 'mixins';
+
+.button {
+    @include mixins.center;
+    border-radius: 10px;
+    width: 85px;
+    padding: 6px 15px 9px 15px;
+    font-weight: semi-bold;
+    font-size: 18px;
+    transition: background-color 0.2s, transform 0.2s;
+
+    &:active {
+        transform: translate(1px, 1px);
+    }
+
+    &--primary {
+        background-color: variables.$color-primary;
+            
+        &:hover {
+            background-color: variables.$color-primary--hover;
+        }
+    }
+
+    &--secondary {
+        background-color: variables.$color-button--dark;
+        color: white;
+            
+        &:hover {
+            background-color: variables.$color-navbar--dark;
+        }
+    }
+
+    &--danger {
+        background-color: variables.$color-button--danger;
+        color: white;
+            
+        &:hover {
+            background-color: variables.$color-button--danger-hover;
+        }
+    }
+
+    &--shadow {
+        box-shadow: 5px 5px 15px variables.$color-objects;
+
+        &:hover {
+            box-shadow: 5px 5px 8px variables.$color-objects;
+        }
+    
+        &:active {
+            box-shadow: 3px 3px 5px variables.$color-objects;
+            transition: box-shadow 0.2s;
+        } 
+    }
+
+    &--margin {
+        margin: 7px;
+    }
+
+    &__container {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        padding-top: 50px;
+    }
+
+}
+
+.icon {
+    display: flex;
+    align-items: center;
+
+    &-edit {
+        margin-right: 20px;
+        padding: 7px;
+        @include mixins.center;
+
+        &:hover,
+        &:active {
+            background-color: variables.$color-icon--neutral;
+            border-radius: 50%;
+        }
+    }
+
+    &-remove {
+        padding: 7px;
+        @include mixins.center;
+
+        &:hover,
+        &:active {
+            background-color: variables.$color-icon--danger;
+            border-radius: 50%;
+        }
+
+    }
+
+    &-new {
+        color: variables.$color-primary;
+    
+        &:hover,
+        &:active {
+            color: variables.$color-primary--hover;
+        }
+    }
+
+    &-duplicate {
+        margin-right: 10px;
+        @include mixins.center;
+        padding: 10px 10px;
+        background-color: variables.$color-icon--neutral;
+        border-radius: 50%;
+    
+        &:hover,
+        &:active {
+            background-color: variables.$color-primary;
+        }
+    }
+
+}
+
+.table__new {
+    margin-top: 15px;
+    padding-left: 0;
+
+    &--text {
+        display: inline;
+        padding: 5px 10px 5px 10px;
+
+        &:hover {
+            cursor: pointer;
+            background-color: variables.$color-icon--neutral;
+            border-radius: 10px;
+        }
+    }
+}
+
+.tag {
+    margin: 0 3px;
+    padding: 2px 6px;
+    border-radius: 10px;
+    background-color: variables.$color-primary--highlight;
+
+    &__popup-container {
+
+        display: flex;
+        padding: 5px 10px 5px 0;
+        font-size: 12px;
+    }
+
+    &__gallery {
+        display: flex;
+        padding: 0 10px 5px 7px;
+        font-size: 12px;
+    }
+
+    &__header {
+        display: flex;
+        padding-top: 10px;
+        font-size: 12px;
+    }
+
+    &__table {
+        display: flex;
+        padding-top: 10px;
+        font-size: 12px;
+    }
+
+    &--flex {
+        display: flex;
+        justify-content: center;
+    }
+
+    &__button-close {
+        @include mixins.center;
+        margin-left: 1px;
+        border-radius: 50%;
+    
+        &:hover {
+            // background-color: variables.$color-primary--hover;
+            color: white;
+        }
+    }
+}
+
+

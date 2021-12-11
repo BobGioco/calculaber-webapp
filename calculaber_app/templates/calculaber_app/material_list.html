@@ -1,32 +1,42 @@
-{% extends "calculaber_app/base.html" %}
+{% extends "calculaber_app/main-layout.html" %}
 {% block body_block %}
+{% include "calculaber_app/navbar.html" %}
+<main>
+  <div class="path">
+      <a href="{% url 'calculaber_app:material_list' %}" class="path__link">Materiály</a>
+  </div>
 
-<div class="jumbotron">
-  <h2>Materiály</h2>
-</div>
-{% csrf_token %}
-<table class="table" id="mydatatable">
-  <thead>
-    <tr>
-      <th scope="col">Název</th>
-      <th scope="col">Margin</th>
-      <th scope="col">Cena</th>
-      <th scope="col">Jednotky</th>
-      <th scope="col">Tags</th>
-      <th></th>
-    </tr>
-  </thead>
-  <tbody>
+  <header class="header header--flex">
+      <h1 class="header__title">Materiály</h1>
+      <button id="new_material" data-toggle="modal" data-target="#NewMaterial">
+        <svg xmlns="http://www.w3.org/2000/svg" class="icon-new" width="40" height="40" fill="currentColor" class="bi bi-plus-circle-fill" viewBox="0 0 16 16">
+            <path d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0zM8.5 4.5a.5.5 0 0 0-1 0v3h-3a.5.5 0 0 0 0 1h3v3a.5.5 0 0 0 1 0v-3h3a.5.5 0 0 0 0-1h-3v-3z"/>
+        </svg>
+      </button>
+  </header>
+  {% csrf_token %}
+  <table class="table-material" id="mydatatable">
+    <thead>
+      <tr class="table-material__head">
+        <th class="table-material__item">Název</th>
+        <th class="table-material__margin">Margin</th>
+        <th class="table-material__price">Cena</th>
+        <th class="table-material__units">Jednotky</th>
+        <th class="table-material__tags">Tags</th>
+      </tr>
+    </thead>
+    <tbody>
 
-  </tbody>
-</table>
-<button type="button" id="new_material" class="btn btn-primary" data-toggle="modal" data-target="#NewMaterial">
-  Nový materiál
-</button>
-{% csrf_token %}
-{% include "calculaber_app/new_material_modal.html" %}
-{% include "calculaber_app/update_material_modal.html" %}
+    </tbody>
 
+  </table>
+  <button class="table__new" title="dil" data-toggle="modal" data-target="#NewMaterial">
+    <p class="table__new--text">+ Nový materiál</p>
+  </button>
+  {% csrf_token %}
+  {% include "calculaber_app/new_material_modal.html" %}
+  {% include "calculaber_app/update_material_modal.html" %}
+</main>
 {% endblock %}
 {% block jquery %}
 {% load static %}
@@ -45,21 +55,23 @@
   var choice_array = {{ units_list|safe }};
   var tag_array = {{ tag_list|safe }};
   var new_tag_array=[];
+  var edit_button_content="<div class='icon-edit'><svg xmlns='http://www.w3.org/2000/svg' width='16' height='16' fill='currentColor' viewBox='0 0 16 16'><path d='M12.146.146a.5.5 0 0 1 .708 0l3 3a.5.5 0 0 1 0 .708l-10 10a.5.5 0 0 1-.168.11l-5 2a.5.5 0 0 1-.65-.65l2-5a.5.5 0 0 1 .11-.168l10-10zM11.207 2.5 13.5 4.793 14.793 3.5 12.5 1.207 11.207 2.5zm1.586 3L10.5 3.207 4 9.707V10h.5a.5.5 0 0 1 .5.5v.5h.5a.5.5 0 0 1 .5.5v.5h.293l6.5-6.5zm-9.761 5.175-.106.106-1.528 3.821 3.821-1.528.106-.106A.5.5 0 0 1 5 12.5V12h-.5a.5.5 0 0 1-.5-.5V11h-.5a.5.5 0 0 1-.468-.325z'/></svg></div>";
+  var remove_button_content="<div class='icon-remove'><svg xmlns='http://www.w3.org/2000/svg' width='16' height='16' fill='currentColor' viewBox='0 0 16 16'><path d='M5.5 5.5A.5.5 0 0 1 6 6v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5zm2.5 0a.5.5 0 0 1 .5.5v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5zm3 .5a.5.5 0 0 0-1 0v6a.5.5 0 0 0 1 0V6z'/><path fill-rule='evenodd' d='M14.5 3a1 1 0 0 1-1 1H13v9a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V4h-.5a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1H6a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1h3.5a1 1 0 0 1 1 1v1zM4.118 4 4 4.059V13a1 1 0 0 0 1 1h6a1 1 0 0 0 1-1V4.059L11.882 4H4.118zM2.5 3V2h11v1h-11z'/></svg></div>";
   document.addEventListener("DOMContentLoaded", function() {
       var table = document.getElementById("mydatatable").getElementsByTagName("tbody")[0];
       var tr="";
       console.log('here');
       material.forEach(x=>{
-         tr+="<tr id='" + x.id + "'>";
-         tr+="<td class='name'>"+x.name+'</td>'+"<td class='margin'>"+FormatNumber(x.margin)+' %</td>'+"<td class='price'>"+FormatNumber(x.price)+' Kč</td>'+"<td class='units'>"+choice_array[x.units]+'</td>';
-         tr+="<td class='tag'>";
+         tr+="<tr class='table-material__data' id='" + x.id + "'>";
+         tr+="<td class='table-material__item name'>"+x.name+'</td>'+"<td class='table-material__margin margin'>"+FormatNumber(x.margin)+' %</td>'+"<td class='table-material__price price'>"+FormatNumber(x.price)+' Kč</td>'+"<td class='table-material__units units'>"+choice_array[x.units]+'</td>';
+         tr+="<td class='table-material__tags'>";
            tag_array.filter(item => item.material_id === x.id).forEach(i=>{
              tr+="<span class='badge rounded-pill bg-warning text-dark'>" + i.tag + "</span>"
            });
          tr+="</td>";
-         tr+="<td>";
-         tr+="<button type='button' class='btn btn-primary update' data-toggle='modal' data-target='#UpdateMaterial'>Upravit</button>";
-         tr+="<form class='delete_material' method='POST'><input class='btn btn-danger' name='delete_material_sub' type='submit' onclick=\"return confirm('Opravdu chcete materiál smazat?')\" value='Smazat'></form>";
+         tr+="<td class='icon'>";
+         tr+="<button class='update' data-toggle='modal' data-target='#UpdateMaterial'>" + edit_button_content + "</button>";
+         tr+="<form class='delete_material' method='POST'><button class='remove' name='delete_material_sub' type='submit' onclick=\"return confirm('Opravdu chcete materiál smazat?')\">" + remove_button_content + "</button></form>";
          tr+="</td>";
          tr+='</tr>';
       })

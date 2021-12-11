@@ -1,16 +1,23 @@
-{% extends "calculaber_app/base.html" %}
+{% extends "calculaber_app/main-layout.html" %}
 {% block body_block %}
+{% include "calculaber_app/navbar.html" %}
+<main>
+  <div class="container">
+    <form method="post">
+      {% csrf_token %}
+      <div class="danger__container">
 
-<br>
-<div class="jumbotron">
-<form method="post">
-  {% csrf_token %}
-    <h2>{{ object.name }}</h2>
-    <h4>Jste si jistí, že chcete objekt smazat?</h4>
-    <br>
-    <input type="submit" value="Smazat" class="btn btn-outline-danger btn-lg">
-    <a class="btn btn-secondary btn-lg" href="{% url 'object_detail' pk1=object.project.id pk2=object.pk %}">Zavřít</a>
-</form>
-</div>
+          <h1>{{ object.name }}</h1>
+
+          <p class="danger__message">Jste si jistí, že chcete objekt <span class="bold">{{ object.name }}</span> smazat?</p>
+
+          <div class="button__container">
+              <a class="button button--secondary button--margin" href="{% url 'object_detail' pk1=object.project.id pk2=object.pk %}">Zavřít</a>
+              <button type="submit" class="button button--danger button--margin">Smazat</button>
+          </div>
+      </div>
+
+  </div>
+</main>
 
 {% endblock %}

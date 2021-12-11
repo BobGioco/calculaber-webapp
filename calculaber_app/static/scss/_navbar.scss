@@ -1,0 +1,150 @@
+@use 'variables';
+@use 'mixins';
+
+// COLOR THEMES
+
+.navbar--light {
+    background-color: variables.$color-navbar--light;
+    justify-content: flex-end;
+
+    .navbar__link--dark {
+        color: black;
+        padding: 0 10px;
+    }
+}
+
+
+.navbar--dark {
+    background-color: variables.$color-navbar--dark;
+    justify-content: space-between;
+
+
+    .navbar__link--light {
+        color: white;
+
+    }
+}
+
+
+// STYLING
+
+.navbar {
+    height: 48px;
+    width: 100%;
+
+    // position: fixed;
+	// left: 0;
+	// top: 0;
+
+
+    display: flex;
+    align-items: center;
+
+    &__menu {
+        display: flex;
+        align-items: center;
+    }
+
+    &__logo {
+        display: flex;
+        align-items: center;
+    
+        .navbar__link {
+            font-size: 18px;
+        }
+    }
+
+    .logo {
+        width: 30px;
+        height: auto;
+        margin: 0 10px 0 15px;
+    }
+
+
+
+    &__link-box {
+        padding: 5px 8px;
+
+        @include mixins.tablet {
+            padding: 5px 20px;
+        }
+    
+
+        &--border-left {
+            border-left: 1px solid variables.$color-objects;
+        }
+
+        &--border-right {
+            border-right: 1px solid variables.$color-objects;
+        }
+
+        &--hide {
+            @media screen and (max-width: 550px) {
+                display: none;
+            }
+        }
+
+        &--text {
+
+            display: none;
+        
+            @include mixins.tablet {
+                display: block;
+            }
+        
+        }
+
+        &--icon {
+
+            padding: 0 15px 0 8px;
+            margin-right: 8px;
+        
+            @include mixins.tablet {
+                display: none;
+            }
+        
+        }
+
+        &--admin {
+            display: none;
+        }
+
+    }
+
+
+
+    &__link {
+
+        font-size: 14px;
+
+        @include mixins.tablet {
+            font-size: 16px;
+        }
+    }
+
+    .highlight {
+        background-size: 0%;
+    }
+
+    &__link--highlight:hover {
+
+        .highlight {
+            background-size: 100% 40%;
+        }
+
+    }
+
+    &__link--underline {
+        padding: 0 5px 11px;
+    }
+    
+    &__link--underline:hover {
+        border-bottom: 3.3px solid variables.$color-primary;
+    }
+    
+    &__link--icon:hover {
+        color: variables.$color-primary;
+    }
+
+}
+

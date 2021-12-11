@@ -1,0 +1,86 @@
+@use 'variables';
+@use 'mixins';
+
+.toolbar {
+    display: flex;
+}
+
+.align-left {
+    text-align: left;
+}
+
+
+table {
+    width: 100%;
+    padding-bottom: 50px;
+    border-collapse:collapse;
+}
+
+th {
+    text-align: left;
+    border-bottom: 1px solid variables.$color-objects;
+}
+
+th,
+td {
+    padding: 12px;
+    text-align: center;
+}
+
+.table {
+
+    &__icons {
+        display: flex;
+        align-items: center;
+
+        &--edit {
+            margin-right: 15px;
+            padding: 7px;
+            @include mixins.center;
+    
+            &:hover {
+                background-color: variables.$color-icon--neutral;
+                border-radius: 50%;
+            }
+        }
+    
+        &--remove {
+            padding: 7px;
+            @include mixins.center;
+    
+            &:hover {
+                background-color: variables.$color-icon--danger;
+                border-radius: 50%;
+            }
+        }
+    }
+
+
+
+
+    &-object,
+    &-material {
+
+        padding-bottom: 20px;
+
+        &__data:hover {
+            background-color: variables.$color-objects--hover;
+        }
+
+        &__item {
+            font-weight: bold;
+            text-align: left;
+        }
+
+    }
+
+    &__new {
+        color: variables.$color-text-secondary;
+    }
+
+    &__tags {
+        display: flex;
+        padding-top: 10px;
+        font-size: 12px;
+    }
+}   
