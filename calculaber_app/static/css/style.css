@@ -72,7 +72,7 @@ button:hover {
   display: grid;
   place-content: center;
   border-radius: 10px;
-  width: 85px;
+  min-width: 85px;
   padding: 6px 15px 9px 15px;
   font-weight: semi-bold;
   font-size: 18px;
@@ -181,26 +181,28 @@ button:hover {
   padding: 2px 6px;
   border-radius: 10px;
   background-color: #FAC835;
+  font-size: 12px;
 }
 .tag__popup-container {
   display: flex;
   padding: 5px 10px 5px 0;
-  font-size: 12px;
 }
 .tag__gallery {
   display: flex;
   padding: 0 10px 5px 7px;
-  font-size: 12px;
 }
 .tag__header {
   display: flex;
   padding-top: 10px;
-  font-size: 12px;
 }
-.tag__table {
+.tag__table, .tag__popup {
   display: flex;
-  padding-top: 10px;
-  font-size: 12px;
+  flex-wrap: wrap;
+  justify-content: left;
+  align-items: center;
+}
+.tag__table .tag-box, .tag__popup .tag-box {
+  padding-top: 7px;
 }
 .tag--flex {
   display: flex;
@@ -568,23 +570,24 @@ td {
   background-color: #FFD8D8;
   border-radius: 50%;
 }
-.table-object, .table-material {
+.table-object, .table-material, .table-extra {
   padding-bottom: 20px;
 }
-.table-object__data:hover, .table-material__data:hover {
+.table-object__data:hover, .table-material__data:hover, .table-extra__data:hover {
   background-color: #f8f9fae1;
 }
-.table-object__item, .table-material__item {
+.table-object__extra, .table-object__item, .table-material__extra, .table-material__item, .table-extra__extra, .table-extra__item, .table-extra__description {
+  text-align: left;
+}
+.table-object__item, .table-material__item, .table-extra__item {
   font-weight: bold;
+}
+.table-object__tags, .table-material__tags, .table-extra__tags {
+  max-width: 200px;
   text-align: left;
 }
 .table__new {
   color: #A2A6AA;
-}
-.table__tags {
-  display: flex;
-  padding-top: 10px;
-  font-size: 12px;
 }
 
 .danger__container {

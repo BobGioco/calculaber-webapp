@@ -72,11 +72,13 @@ $(document).ready(function(){
         $('#' + response_data['id'] + " td.units").text(choice_array[response_data['units']]);
         var tr='';
         tag_array=tag_array.filter(item => item.material_id != Number(response_data['id']));
+        tr+="<div class='tag__popup'>";
         JSON.parse(response_data['tag_list']).forEach( x=>{
           console.log(x.tag);
           tag_array.push(x);
-          tr+="<span class='badge rounded-pill bg-warning text-dark'>" + x.tag + "</span>";
+          tr+="<div class='tag-box'><p class='tag tag--flex'>" + x.tag + "</p></div>";
         });
+        tr+="</div>";
         $('#' + response_data['id'] + " td.table-material__tags").html(tr);
         var to_update_data=material.findIndex(item => item.id === response_data['id']);
         material[to_update_data]=response_data;
@@ -112,11 +114,12 @@ $(document).ready(function(){
         tr+="<tr class='table-material__data' id='" + response_data['id'] + "'>";
         tr+="<td class='table-material__item name'>"+response_data['name']+'</td>'+"<td class='table-material__margin margin'>"+FormatNumber(response_data['margin'])+' %</td>'+"<td class='table-material__price price'>"+FormatNumber(response_data['price'])+' Kč</td>'+"<td class='table-material__units units'>"+choice_array[response_data['units']]+'</td>'
         tr+="<td class='table-material__tags'>";
+        tr+="<div class='tag__popup'>";
         JSON.parse(response_data['tag_list']).forEach(x=>{
           console.log(x.tag);
-          tr+="<span class='badge rounded-pill bg-warning text-dark'>" + x.tag;
-          tr+="</span>";
+          tr+="<div class='tag-box'><p class='tag tag--flex'>" + x.tag + "</p></div>";
         });
+        tr+="</div>";
         tr+="</td>";
         tr+="<td class='icon'>"
         tr+="<button class='update' data-toggle='modal' data-target='#UpdateMaterial'>" + edit_button_content + "</button>";
@@ -144,15 +147,16 @@ $(document).ready(function(){
   $("#UpdateMaterial").on('show.bs.modal', function(event) {
     console.log('update_modal');
     new_tag_array = [];
-    $(this).find('div.tag-container')[0].innerHTML='';
+    $(this).find('div.tag__popup')[0].innerHTML='';
     $('form.update_material input#id_tag').val('');
     tag_array.filter(item => item.material_id === Number($('#material_id').val())).forEach(x=>{
       new_tag_array.push(x.tag);
-      $(this).find('div.tag-container')[0].innerHTML+="<span class='badge rounded-pill bg-warning text-dark'>" + x.tag +"<button type='button' class='remove-tag'><svg xmlns='http://www.w3.org/2000/svg' width='16' height='16' fill='currentColor' class='bi bi-x' viewBox='0 0 16 16'><path d='M4.646 4.646a.5.5 0 0 1 .708 0L8 7.293l2.646-2.647a.5.5 0 0 1 .708.708L8.707 8l2.647 2.646a.5.5 0 0 1-.708.708L8 8.707l-2.646 2.647a.5.5 0 0 1-.708-.708L7.293 8 4.646 5.354a.5.5 0 0 1 0-.708z'/></svg></button></span>";
+      $(this).find('div.tag__popup')[0].innerHTML+="<div class='tag-box'><p class='tag tag--flex'>" + x.tag +"<button type='button' class='tag__button-close'><svg xmlns='http://www.w3.org/2000/svg' width='16' height='16' fill='currentColor' class='bi bi-x' viewBox='0 0 16 16'><path d='M4.646 4.646a.5.5 0 0 1 .708 0L8 7.293l2.646-2.647a.5.5 0 0 1 .708.708L8.707 8l2.647 2.646a.5.5 0 0 1-.708.708L8 8.707l-2.646 2.647a.5.5 0 0 1-.708-.708L7.293 8 4.646 5.354a.5.5 0 0 1 0-.708z'/></svg></button></p></div>";
     });
     console.log(new_tag_array);
   });
   $("#NewMaterial").on('show.bs.modal', function(event) {
+    new_tag_array = [];
     console.log('new_material_modal');
   });
 
@@ -162,7 +166,7 @@ $(document).ready(function(){
         e.preventDefault();
         console.log($(this).val());
         if(new_tag_array.includes($(this).val())===false){
-          $("form.update_material div.tag-container")[0].innerHTML+="<span class='badge rounded-pill bg-warning text-dark'>" + $(this).val() +"<button type='button' class='remove-tag'><svg xmlns='http://www.w3.org/2000/svg' width='16' height='16' fill='currentColor' class='bi bi-x' viewBox='0 0 16 16'><path d='M4.646 4.646a.5.5 0 0 1 .708 0L8 7.293l2.646-2.647a.5.5 0 0 1 .708.708L8.707 8l2.647 2.646a.5.5 0 0 1-.708.708L8 8.707l-2.646 2.647a.5.5 0 0 1-.708-.708L7.293 8 4.646 5.354a.5.5 0 0 1 0-.708z'/></svg></button></span>";
+          $("form.update_material div.tag__popup")[0].innerHTML+="<div class='tag-box'><p class='tag tag--flex'>" + $(this).val() +"<button type='button' class='tag__button-close'><svg xmlns='http://www.w3.org/2000/svg' width='16' height='16' fill='currentColor' class='bi bi-x' viewBox='0 0 16 16'><path d='M4.646 4.646a.5.5 0 0 1 .708 0L8 7.293l2.646-2.647a.5.5 0 0 1 .708.708L8.707 8l2.647 2.646a.5.5 0 0 1-.708.708L8 8.707l-2.646 2.647a.5.5 0 0 1-.708-.708L7.293 8 4.646 5.354a.5.5 0 0 1 0-.708z'/></svg></button></p></div>";
           new_tag_array.push($(this).val());
       };
         $(this).val('');
@@ -173,7 +177,7 @@ $(document).ready(function(){
         e.preventDefault();
         console.log($(this).val());
         if(new_tag_array.includes($(this).val())===false){
-          $("form.new_material div.tag-container")[0].innerHTML+="<span class='badge rounded-pill bg-warning text-dark'>" + $(this).val() +"<button type='button' class='remove-tag'><svg xmlns='http://www.w3.org/2000/svg' width='16' height='16' fill='currentColor' class='bi bi-x' viewBox='0 0 16 16'><path d='M4.646 4.646a.5.5 0 0 1 .708 0L8 7.293l2.646-2.647a.5.5 0 0 1 .708.708L8.707 8l2.647 2.646a.5.5 0 0 1-.708.708L8 8.707l-2.646 2.647a.5.5 0 0 1-.708-.708L7.293 8 4.646 5.354a.5.5 0 0 1 0-.708z'/></svg></button></span>";
+          $("form.new_material div.tag__popup")[0].innerHTML+="<div class='tag-box'><p class='tag tag--flex'>" + $(this).val() +"<button type='button' class='tag__button-close'><svg xmlns='http://www.w3.org/2000/svg' width='16' height='16' fill='currentColor' class='bi bi-x' viewBox='0 0 16 16'><path d='M4.646 4.646a.5.5 0 0 1 .708 0L8 7.293l2.646-2.647a.5.5 0 0 1 .708.708L8.707 8l2.647 2.646a.5.5 0 0 1-.708.708L8 8.707l-2.646 2.647a.5.5 0 0 1-.708-.708L7.293 8 4.646 5.354a.5.5 0 0 1 0-.708z'/></svg></button></p></div>";
           new_tag_array.push($(this).val());
         };
         $(this).val('');
@@ -187,15 +191,15 @@ $(document).ready(function(){
     $("form.new_material div.tag-container")[0].innerHTML="";
   };
 
-  $('form.new_material').on("click", "button.remove-tag", function (event){
-    var drop=$(this).closest('span.badge').text().trim();
-    $(this).closest('span.badge').remove();
+  $('form.new_material').on("click", "button.tag__button-close", function (event){
+    var drop=$(this).closest('div.tag-box').text().trim();
+    $(this).closest('div.tag-box').remove();
     new_tag_array=new_tag_array.filter(function(f) { return f !== drop });
   });
 
-  $('form.update_material').on("click", "button.remove-tag", function (event){
-    var drop=$(this).closest('span.badge').text().trim();
-    $(this).closest('span.badge').remove();
+  $('form.update_material').on("click", "button.tag__button-close", function (event){
+    var drop=$(this).closest('div.tag-box').text().trim();
+    $(this).closest('div.tag-box').remove();
     new_tag_array=new_tag_array.filter(function(f) { return f !== drop });
   });
 

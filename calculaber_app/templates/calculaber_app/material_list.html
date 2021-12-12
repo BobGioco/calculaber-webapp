@@ -65,9 +65,11 @@
          tr+="<tr class='table-material__data' id='" + x.id + "'>";
          tr+="<td class='table-material__item name'>"+x.name+'</td>'+"<td class='table-material__margin margin'>"+FormatNumber(x.margin)+' %</td>'+"<td class='table-material__price price'>"+FormatNumber(x.price)+' Kč</td>'+"<td class='table-material__units units'>"+choice_array[x.units]+'</td>';
          tr+="<td class='table-material__tags'>";
+         tr+="<div class='tag__popup'>";
            tag_array.filter(item => item.material_id === x.id).forEach(i=>{
-             tr+="<span class='badge rounded-pill bg-warning text-dark'>" + i.tag + "</span>"
+             tr+="<div class='tag-box'><p class='tag tag--flex'>" + i.tag + "</p></div>";
            });
+         tr+="</div>";
          tr+="</td>";
          tr+="<td class='icon'>";
          tr+="<button class='update' data-toggle='modal' data-target='#UpdateMaterial'>" + edit_button_content + "</button>";

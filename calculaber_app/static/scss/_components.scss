@@ -4,7 +4,7 @@
 .button {
     @include mixins.center;
     border-radius: 10px;
-    width: 85px;
+    min-width: 85px;
     padding: 6px 15px 9px 15px;
     font-weight: semi-bold;
     font-size: 18px;
@@ -139,30 +139,33 @@
     padding: 2px 6px;
     border-radius: 10px;
     background-color: variables.$color-primary--highlight;
+    font-size: 12px;
 
     &__popup-container {
-
         display: flex;
         padding: 5px 10px 5px 0;
-        font-size: 12px;
     }
 
     &__gallery {
         display: flex;
         padding: 0 10px 5px 7px;
-        font-size: 12px;
     }
 
     &__header {
         display: flex;
         padding-top: 10px;
-        font-size: 12px;
     }
 
-    &__table {
+    &__table,
+    &__popup {
         display: flex;
-        padding-top: 10px;
-        font-size: 12px;
+        flex-wrap: wrap;
+        justify-content: left;
+        align-items: center;
+
+        .tag-box {
+            padding-top: 7px;
+        }
     }
 
     &--flex {

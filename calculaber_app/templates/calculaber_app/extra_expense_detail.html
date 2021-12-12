@@ -11,22 +11,16 @@
   </div>
   <header class="header">
 
-    <div class="header__top">
-      <div class="header__title-container">
-        <h1 class="header__title">Extra náklady</h1>
-      </div>
+    <div class="header__top header--flex">
+      <h1 class="header__title">Extra náklady</h1>
 
-      <div class="header__tools">
 
-        <div class="header__object-icons">
-          <button class="header__icon-new" title="dil" type="button" data-toggle="modal" data-target="#NewExtraExpense">
-            <svg xmlns="http://www.w3.org/2000/svg" class="icon-new" width="40" height="40" fill="currentColor" class="bi bi-plus-circle-fill" viewBox="0 0 16 16">
-              <path d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0zM8.5 4.5a.5.5 0 0 0-1 0v3h-3a.5.5 0 0 0 0 1h3v3a.5.5 0 0 0 1 0v-3h3a.5.5 0 0 0 0-1h-3v-3z"/>
-            </svg>
-          </button>
-        </div>
+      <button class="header__icon-new" title="dil" type="button" data-toggle="modal" data-target="#NewExtraExpense">
+        <svg xmlns="http://www.w3.org/2000/svg" class="icon-new" width="40" height="40" fill="currentColor" class="bi bi-plus-circle-fill" viewBox="0 0 16 16">
+          <path d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0zM8.5 4.5a.5.5 0 0 0-1 0v3h-3a.5.5 0 0 0 0 1h3v3a.5.5 0 0 0 1 0v-3h3a.5.5 0 0 0 0-1h-3v-3z"/>
+        </svg>
+      </button>
 
-      </div>
     </div>
 
     <div class="header__bottom">
@@ -38,9 +32,9 @@
   <table class="table-object" id="extra_expense_detail_tbl">
     <thead>
       <tr class="table-object__head">
-        <th class="table-object__item">Název</th>
-        <th class="table-object__item">Popis</th>
-        <th class="table-object__price">Cena</th>
+        <th class="table-extra__item">Název</th>
+        <th class="table-extra__description">Popis</th>
+        <th class="table-extra__price">Cena</th>
       </tr>
     </thead>
     <tbody>
@@ -73,9 +67,9 @@
   var remove_button_content="<div class='icon-remove'><svg xmlns='http://www.w3.org/2000/svg' width='16' height='16' fill='currentColor' viewBox='0 0 16 16'><path d='M5.5 5.5A.5.5 0 0 1 6 6v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5zm2.5 0a.5.5 0 0 1 .5.5v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5zm3 .5a.5.5 0 0 0-1 0v6a.5.5 0 0 0 1 0V6z'/><path fill-rule='evenodd' d='M14.5 3a1 1 0 0 1-1 1H13v9a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V4h-.5a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1H6a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1h3.5a1 1 0 0 1 1 1v1zM4.118 4 4 4.059V13a1 1 0 0 0 1 1h6a1 1 0 0 0 1-1V4.059L11.882 4H4.118zM2.5 3V2h11v1h-11z'/></svg></div>";
   function GenerateNewRow(id,name,description,price){
     html_txt="<tr class='table-object__data' id=" + id + ">"
-    html_txt+="<td class='table-object__item name'>" + name + "</td>";
-    html_txt+="<td class='table-object__material description'>" + description + "</td>";
-    html_txt+="<td class='table-object__price price'>" + FormatNumber(price) + " Kč</td>";
+    html_txt+="<td class='table-extra__item name'>" + name + "</td>";
+    html_txt+="<td class='table-extra__description description'>" + description + "</td>";
+    html_txt+="<td class='table-extra__price price'>" + FormatNumber(price) + " Kč</td>";
     html_txt+="<td class='icon'>";
     html_txt+="<button type='button' class='update' data-toggle='modal' data-target='#UpdateExtraExpense'>"+ edit_button_content +"</button>";
     html_txt+="<form class='delete_extra_expense' method='POST'><button name='delete_extra_expense_sub' type='submit' onclick=\"return confirm('Opravdu chcete výdaj smazat?')\" value='Smazat'>" + remove_button_content + "</button></form>";

@@ -59,7 +59,8 @@ td {
 
 
     &-object,
-    &-material {
+    &-material,
+    &-extra {
 
         padding-bottom: 20px;
 
@@ -67,8 +68,17 @@ td {
             background-color: variables.$color-objects--hover;
         }
 
+        &__extra,
+        &__item {
+            text-align: left;
+        }
+
         &__item {
             font-weight: bold;
+        }
+
+        &__tags {
+            max-width: 200px;
             text-align: left;
         }
 
@@ -78,9 +88,4 @@ td {
         color: variables.$color-text-secondary;
     }
 
-    &__tags {
-        display: flex;
-        padding-top: 10px;
-        font-size: 12px;
-    }
 }   
