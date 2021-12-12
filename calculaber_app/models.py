@@ -7,7 +7,7 @@ class Project(models.Model):
     user=models.ForeignKey(User,on_delete=models.CASCADE)
     name = models.CharField(max_length=128)
     create_date=models.DateTimeField(default=timezone.now)
-    project_pic=models.ImageField(upload_to='project_pics',blank=True)
+    project_pic=models.ImageField(upload_to='project_pics',default="project_pics/default.png",blank=True)
     def __str__(self):
         return f"{self.id} - {self.name}"
 

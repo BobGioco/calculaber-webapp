@@ -110,7 +110,7 @@
   };
   function GenerateExtraExpenseCard(price){
     html_txt="<a href=" + extra_expense_path + " class='gallery__card'>";
-    html_txt+="<div class='gallery__image'><img src='media/images/kitchen.jpg' class='gallery__user-image' alt='image'></div>";
+    html_txt+="<div class='gallery__image'></div>";
     html_txt+="<div class='gallery__info'>";
     html_txt+="<div class='gallery__title gallery__title--flex'>"
     html_txt+="<p class='gallery__title--name'>Další náklady</p>"
@@ -122,7 +122,11 @@
   };
   document.addEventListener("DOMContentLoaded", function() {
       var container = document.getElementById("object-cards");
-      $("span.total_price")[0].innerHTML=FormatNumber(objects.map(item => item.object_price).reduce((prev, next) => Number(prev) + Number(next)));
+      if(objects.length>0){
+        $("span.total_price")[0].innerHTML=FormatNumber(objects.map(item => item.object_price).reduce((prev, next) => Number(prev) + Number(next)));
+      }else{
+        $("span.total_price")[0].innerHTML=FormatNumber(0);
+      };
       //table.innerHTML="";
       var tr="";
       //console.log(container);
@@ -130,11 +134,15 @@
          tr+=GenerateObjectCard(x.id,x.name,x.object_price,x.create_date);
       });
       container.innerHTML+=tr;
-      container.innerHTML+=GenerateExtraExpenseCard(extra_expense.map(item => Number(item.price)).reduce((prev, next) => prev + next));
+      if(extra_expense.length>0){
+        container.innerHTML+=GenerateExtraExpenseCard(extra_expense.map(item => Number(item.price)).reduce((prev, next) => prev + next));
+      }else{
+        container.innerHTML+=GenerateExtraExpenseCard(0);
+      }
+
       container.innerHTML+="<button id='update_project_btn' data-toggle='modal' data-target='#UpdateProject'><div class='gallery__card gallery__card--new'><p class='gallery__title--center'>+ Nový objekt</p></div></button>";
     });
 </script>
-
 <script type="text/javascript" charset="utf-8">
   $('button#update_project_btn').click(function() {
     $('#{{ form_update.name.id_for_label }}').attr('value',"{{ project.name }}");

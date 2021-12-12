@@ -1,2 +1,6 @@
 db.sqlite3
 /media/project_pics/*
+!/media/project_pics/default.png
+/media/images/*
+/Calculaber/urls.py
+/Calculaber/settings.py

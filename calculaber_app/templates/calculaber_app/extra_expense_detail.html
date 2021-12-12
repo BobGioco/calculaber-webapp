@@ -85,7 +85,11 @@
          tr+=GenerateNewRow(x.id,x.name,x.description,x.price);
       })
       table.innerHTML+=tr;
-      $("span.total_price").text(FormatNumber(extra_expense.map(item => item.price).reduce((prev, next) => Number(prev) + Number(next))) + " Kč")
+      if(extra_expense.length>0){
+        $("span.total_price").text(FormatNumber(extra_expense.map(item => item.price).reduce((prev, next) => Number(prev) + Number(next))) + " Kč")
+      }else{
+        $("span.total_price").text(FormatNumber(0) + " Kč")
+      }
   });
 </script>
 <script type="text/javascript" src="{% static 'js/extra_expense.js' %}" charset="utf-8"></script>
