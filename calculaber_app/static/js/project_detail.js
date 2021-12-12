@@ -89,7 +89,15 @@ $(document).ready(function(){
         $("form.new_object div.tag__popup")[0].innerHTML="";
         $('#DuplicateObject').modal('hide');
         document.getElementById("object-cards").innerHTML+=GenerateObjectCard(object_response[0].id,object_response[0].name,object_response[0].object_price,object_response[0].create_date);
-        $("span.total_price")[0].innerHTML=FormatNumber(objects.map(item => item.object_price).reduce((prev, next) => Number(prev) + Number(next)));
+        total_price=0;
+        if (objects.length>0) {
+          total_price+=objects.map(item => item.object_price).reduce((prev, next) => Number(prev) + Number(next));
+        }
+        if (extra_expense.length>0) {
+          total_price+=extra_expense.map(item => Number(item.price)).reduce((prev, next) => prev + next);
+        }
+        $("span.total_price")[0].innerHTML=FormatNumber(total_price);
+        //FormatNumber(objects.map(item => item.object_price).reduce((prev, next) => Number(prev) + Number(next)));
       }
     })
   });

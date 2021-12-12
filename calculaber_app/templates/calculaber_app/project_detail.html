@@ -91,6 +91,7 @@
   var all_objects= {{ all_objects|safe }};
   var tag_array= {{ tag_list|safe }};
   var new_tag_array=[];
+  var total_price=0;
   function GenerateObjectCard(id,name,price,date){
     html_txt="<a href=" + object_path.replace('0',id) + " class='gallery__card'>";
     html_txt+="<div class='gallery__image'><img src='/media/images/kitchen.jpg' class='gallery__user-image' alt='image'></div>";
@@ -122,11 +123,13 @@
   };
   document.addEventListener("DOMContentLoaded", function() {
       var container = document.getElementById("object-cards");
-      if(objects.length>0){
-        $("span.total_price")[0].innerHTML=FormatNumber(objects.map(item => item.object_price).reduce((prev, next) => Number(prev) + Number(next)));
-      }else{
-        $("span.total_price")[0].innerHTML=FormatNumber(0);
-      };
+      if (objects.length>0) {
+        total_price+=objects.map(item => item.object_price).reduce((prev, next) => Number(prev) + Number(next))
+      }
+      if (extra_expense.length>0) {
+        total_price+=extra_expense.map(item => Number(item.price)).reduce((prev, next) => prev + next)
+      }
+      $("span.total_price")[0].innerHTML=FormatNumber(total_price);
       //table.innerHTML="";
       var tr="";
       //console.log(container);
