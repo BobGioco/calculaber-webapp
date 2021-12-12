@@ -184,11 +184,8 @@ $(document).ready(function(){
     }
   });
   function CleanNewMaterialForm() {
-    $('form.new_material #new_material_name').val('');
-    $('form.new_material #new_material_price').val('');
-    $('form.new_material #new_material_margin').val('');
-    $("form.new_material #new_material_units" ).val($("#new_material_units option:first").val());
-    $("form.new_material div.tag-container")[0].innerHTML="";
+    $("form.new_material").get(0).reset();
+    $("form.new_material div.tag__popup")[0].innerHTML="";
   };
 
   $('form.new_material').on("click", "button.tag__button-close", function (event){
