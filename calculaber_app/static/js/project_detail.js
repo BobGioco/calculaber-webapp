@@ -86,7 +86,7 @@ $(document).ready(function(){
         console.log('done');
         new_tag_array=[];
         $('form.new_object #id_name').val(),
-        $("form.new_object div.tag-container")[0].innerHTML="";
+        $("form.new_object div.tag__popup")[0].innerHTML="";
         $('#DuplicateObject').modal('hide');
         document.getElementById("object-cards").innerHTML+=GenerateObjectCard(object_response[0].id,object_response[0].name,object_response[0].object_price,object_response[0].create_date);
         $("span.total_price")[0].innerHTML=FormatNumber(objects.map(item => item.object_price).reduce((prev, next) => Number(prev) + Number(next)));
