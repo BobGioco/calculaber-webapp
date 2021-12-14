@@ -4,48 +4,321 @@
 //WELCOME PAGE
 
 .hero {
-    width: 100%;
-    padding: 20px;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
 
-    &__logo {
-        padding-top: 50px;
-        padding-bottom: 20px;
-        width: 80px;
-        height: auto;
+    @include mixins.tablet {
+        margin-top: 60px;
+    }
+
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    grid-template-rows: auto;
+    grid-template-areas: "icons--left content icons--right";
+
+
+    &__icons--left,
+    &__icons--right {
+
+        display: none;
+        padding-left: 10px;
+
+
+        .icon {
+
+            &--absolute {
+                position: absolute;
+                color: variables.$color-objects;
+            }
+        }
+
+        @include mixins.tablet {
+            display: block;
+            position: relative;
+        }
+    }
+
+    
+
+    &__icons--left {
+        grid-area: icons--left;
+
+        @include mixins.desktop {
+            margin-left: 40px;
+        }
+
+        .icon {
+
+            @keyframes percent-left {
+                from {top: 80%; right: 120%;}
+                to {top: 75%; right: -5%;}
+            }
+
+            &-percent {
+                animation: percent-left 3s;
+                animation-fill-mode: forwards;
+            }
+
+
+            @keyframes calculator-left {
+                from {top: 90%; right: 120%;}
+                to {top: 87%; right: 30%;}
+            }
+
+            &-calculator {
+                transform: rotate(-15deg);
+                animation: calculator-left 3s;
+                animation-fill-mode: forwards;
+            }
+
+
+            @keyframes folder-left {
+                from {top: 5%; right: 120%;}
+                to {top: 15%; right: 65%;}
+            }
+
+            &-folder {
+                transform: rotate(-15deg);
+                animation: folder-left 3s;
+                animation-fill-mode: forwards;
+            }
+
+
+            @keyframes table-left {
+                from {top: 55%; right: 120%;}
+                to {top: 75%; right: 75%;}
+            }
+
+            &-table {
+                transform: rotate(5deg);
+                animation: table-left 3s;
+                animation-fill-mode: forwards;
+            }
+
+
+
+            @keyframes pencil-left {
+                from {top: 30%; right: 120%;}
+                to {top: 55%; right: 55%;}
+            }
+
+            &-pencil {
+                transform: rotate(180deg);
+                animation: pencil-left 3s;
+                animation-fill-mode: forwards;
+            }
+
+
+            @keyframes tag-left {
+                from {top: 10%; right: 120%;}
+                to {top: 30%; right: 35%;}
+            }
+
+            &-tag {
+                transform: rotate(30deg);
+                animation: tag-left 3s;
+                animation-fill-mode: forwards;
+            }
+
+
+            @keyframes ruler-left {
+                from {top: -5%; right: 120%;}
+                to {top: 20%; right: -5%;}
+            }
+
+            &-ruler {
+                // transform: rotate(90deg);
+                animation: ruler-left 3s;
+                animation-fill-mode: forwards;
+            }
+
+
+            @keyframes card-left {
+                from {top: 30%; right: 120%;}
+                to {top: 50%; right: 15%;}
+            }
+
+            &-card {
+                animation: card-left 3s;
+                animation-fill-mode: forwards;
+                transform: rotate(15deg);
+            }
+        }
     }
 
 
-    &__title {
-        font-size: 50px;
-        padding-bottom: 50px;
+
+    &__icons--right {
+        grid-area: icons--right;
+
+        .icon {
+
+            @keyframes percent-right {
+                from {top: -10%; left: 120%;}
+                to {top: 10%; left: 15%;}
+            }
+
+            &-percent {
+                animation: percent-right 3s;
+                animation-fill-mode: forwards;
+            }
+
+
+            @keyframes pencil-right {
+                from {top: 5%; left: 120%;}
+                to {top: 25%; left: -10%;}
+            }
+
+            &-pencil {
+                transform: rotate(-90deg);
+                animation: pencil-right 3s;
+                animation-fill-mode: forwards;
+            }
+
+
+            @keyframes tag-right {
+                from {top: 10%; left: 120%;}
+                to {top: 35%; left: 40%;}
+            }
+
+            &-tag {
+                transform: rotate(30deg);
+                animation: tag-right 3s;
+                animation-fill-mode: forwards;
+            }
+
+
+            @keyframes table-right {
+                from {top: 30%; left: 120%;}
+                to {top: 50%; left: 20%;}
+            }
+
+            &-table {
+                transform: rotate(13deg);
+                animation: table-right 3s;
+                animation-fill-mode: forwards;
+            }
+
+
+            @keyframes calculator-right {
+                from {top: 10%; left: 120%;}
+                to {top: 25%; left: 65%;}
+            }
+
+            &-calculator {
+                transform: rotate(15deg);
+                animation: calculator-right 3s;
+                animation-fill-mode: forwards;
+            }
+
+
+            @keyframes ruler-right {
+                from {top: 80%; left: 120%;}
+                to {top: 70%; left: -5%;}
+            }
+
+            &-ruler {
+                // transform: rotate(90deg);
+                animation: ruler-right 3s;
+                animation-fill-mode: forwards;
+            }
+
+            @keyframes folder-right {
+                from {top: 90%; left: 120%;}
+                to {top: 85%; left: 40%;}
+            }
+
+            &-folder {
+                animation: folder-right 3s;
+                animation-fill-mode: forwards;
+            }
+
+
+            @keyframes card-right {
+                from {top: 65%; left: 120%;}
+                to {top: 60%; left: 70%;}
+            }
+
+            &-card {
+                animation: card-right 3s;
+                animation-fill-mode: forwards;
+                transform: rotate(15deg);
+            }
+
+        }
     }
 
-    &__button {
-        width: 120px;
-        height: 50px;
-        font-weight: semi-bold;
-        font-size: 24px;
-    }
 
+
+
+
+    &__content {
+        grid-area: content;
+        width: 100%;
+        padding: 20px;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        text-align: center;
+
+
+        &-logo {
+            padding-top: 40px;
+            padding-bottom: 30px;
+            width: 80px;
+            height: auto;
+
+            @include mixins.large-desktop {
+                width: 130px;
+                padding-bottom: 50px;
+            }
+        }
+
+
+        &-title {
+            font-size: 60px;
+            padding-bottom: 25px;
+
+            @include mixins.large-desktop {
+                font-size: 90px;
+                padding-bottom: 40px;
+            }
+        }
+
+        &-subtitle {
+            padding-bottom: 70px;
+
+            @include mixins.large-desktop {
+                font-size: 36px;
+                padding-bottom: 100px;
+            }
+        }
+
+        &-button {
+            width: 120px;
+            height: 50px;
+            font-weight: semi-bold;
+            font-size: 24px;
+
+            @include mixins.large-desktop {
+                width: 150px;
+                height: 70px;
+                font-size: 36px;
+            }
+        }
+    }
 }
 
-.value-prop {
-    padding: 70px 20px;
-}
+
 
 
 // REGISTER
 
 .welcome {
+    margin: 0 30px;
     display: flex;
     flex-direction: column;
     align-items: center;
     text-align: center;
-    // place-content: center;
-    // text-align: center;
+
 
     &__title {
         padding: 80px 0 40px 0;
@@ -82,6 +355,8 @@
     }
 
 }
+
+
 
 // LOGIN
 

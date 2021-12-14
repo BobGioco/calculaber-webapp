@@ -93,6 +93,7 @@ button:hover {
 }
 .button--secondary:hover {
   background-color: #2E2A3D;
+  color: white;
 }
 .button--danger {
   background-color: #f87676;
@@ -400,34 +401,524 @@ button:hover {
 }
 
 .hero {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  grid-template-rows: auto;
+  grid-template-areas: "icons--left content icons--right";
+}
+@media screen and (min-width: 768px) {
+  .hero {
+    margin-top: 60px;
+  }
+}
+.hero__icons--left, .hero__icons--right {
+  display: none;
+  padding-left: 10px;
+}
+.hero__icons--left .icon--absolute, .hero__icons--right .icon--absolute {
+  position: absolute;
+  color: #CED6DF;
+}
+@media screen and (min-width: 768px) {
+  .hero__icons--left, .hero__icons--right {
+    display: block;
+    position: relative;
+  }
+}
+.hero__icons--left {
+  grid-area: icons--left;
+}
+@media screen and (min-width: 1024px) {
+  .hero__icons--left {
+    margin-left: 40px;
+  }
+}
+@-webkit-keyframes percent-left {
+  from {
+    top: 80%;
+    right: 120%;
+  }
+  to {
+    top: 75%;
+    right: -5%;
+  }
+}
+@keyframes percent-left {
+  from {
+    top: 80%;
+    right: 120%;
+  }
+  to {
+    top: 75%;
+    right: -5%;
+  }
+}
+.hero__icons--left .icon-percent {
+  -webkit-animation: percent-left 3s;
+          animation: percent-left 3s;
+  -webkit-animation-fill-mode: forwards;
+          animation-fill-mode: forwards;
+}
+@-webkit-keyframes calculator-left {
+  from {
+    top: 90%;
+    right: 120%;
+  }
+  to {
+    top: 87%;
+    right: 30%;
+  }
+}
+@keyframes calculator-left {
+  from {
+    top: 90%;
+    right: 120%;
+  }
+  to {
+    top: 87%;
+    right: 30%;
+  }
+}
+.hero__icons--left .icon-calculator {
+  transform: rotate(-15deg);
+  -webkit-animation: calculator-left 3s;
+          animation: calculator-left 3s;
+  -webkit-animation-fill-mode: forwards;
+          animation-fill-mode: forwards;
+}
+@-webkit-keyframes folder-left {
+  from {
+    top: 5%;
+    right: 120%;
+  }
+  to {
+    top: 15%;
+    right: 65%;
+  }
+}
+@keyframes folder-left {
+  from {
+    top: 5%;
+    right: 120%;
+  }
+  to {
+    top: 15%;
+    right: 65%;
+  }
+}
+.hero__icons--left .icon-folder {
+  transform: rotate(-15deg);
+  -webkit-animation: folder-left 3s;
+          animation: folder-left 3s;
+  -webkit-animation-fill-mode: forwards;
+          animation-fill-mode: forwards;
+}
+@-webkit-keyframes table-left {
+  from {
+    top: 55%;
+    right: 120%;
+  }
+  to {
+    top: 75%;
+    right: 75%;
+  }
+}
+@keyframes table-left {
+  from {
+    top: 55%;
+    right: 120%;
+  }
+  to {
+    top: 75%;
+    right: 75%;
+  }
+}
+.hero__icons--left .icon-table {
+  transform: rotate(5deg);
+  -webkit-animation: table-left 3s;
+          animation: table-left 3s;
+  -webkit-animation-fill-mode: forwards;
+          animation-fill-mode: forwards;
+}
+@-webkit-keyframes pencil-left {
+  from {
+    top: 30%;
+    right: 120%;
+  }
+  to {
+    top: 55%;
+    right: 55%;
+  }
+}
+@keyframes pencil-left {
+  from {
+    top: 30%;
+    right: 120%;
+  }
+  to {
+    top: 55%;
+    right: 55%;
+  }
+}
+.hero__icons--left .icon-pencil {
+  transform: rotate(180deg);
+  -webkit-animation: pencil-left 3s;
+          animation: pencil-left 3s;
+  -webkit-animation-fill-mode: forwards;
+          animation-fill-mode: forwards;
+}
+@-webkit-keyframes tag-left {
+  from {
+    top: 10%;
+    right: 120%;
+  }
+  to {
+    top: 30%;
+    right: 35%;
+  }
+}
+@keyframes tag-left {
+  from {
+    top: 10%;
+    right: 120%;
+  }
+  to {
+    top: 30%;
+    right: 35%;
+  }
+}
+.hero__icons--left .icon-tag {
+  transform: rotate(30deg);
+  -webkit-animation: tag-left 3s;
+          animation: tag-left 3s;
+  -webkit-animation-fill-mode: forwards;
+          animation-fill-mode: forwards;
+}
+@-webkit-keyframes ruler-left {
+  from {
+    top: -5%;
+    right: 120%;
+  }
+  to {
+    top: 20%;
+    right: -5%;
+  }
+}
+@keyframes ruler-left {
+  from {
+    top: -5%;
+    right: 120%;
+  }
+  to {
+    top: 20%;
+    right: -5%;
+  }
+}
+.hero__icons--left .icon-ruler {
+  -webkit-animation: ruler-left 3s;
+          animation: ruler-left 3s;
+  -webkit-animation-fill-mode: forwards;
+          animation-fill-mode: forwards;
+}
+@-webkit-keyframes card-left {
+  from {
+    top: 30%;
+    right: 120%;
+  }
+  to {
+    top: 50%;
+    right: 15%;
+  }
+}
+@keyframes card-left {
+  from {
+    top: 30%;
+    right: 120%;
+  }
+  to {
+    top: 50%;
+    right: 15%;
+  }
+}
+.hero__icons--left .icon-card {
+  -webkit-animation: card-left 3s;
+          animation: card-left 3s;
+  -webkit-animation-fill-mode: forwards;
+          animation-fill-mode: forwards;
+  transform: rotate(15deg);
+}
+.hero__icons--right {
+  grid-area: icons--right;
+}
+@-webkit-keyframes percent-right {
+  from {
+    top: -10%;
+    left: 120%;
+  }
+  to {
+    top: 10%;
+    left: 15%;
+  }
+}
+@keyframes percent-right {
+  from {
+    top: -10%;
+    left: 120%;
+  }
+  to {
+    top: 10%;
+    left: 15%;
+  }
+}
+.hero__icons--right .icon-percent {
+  -webkit-animation: percent-right 3s;
+          animation: percent-right 3s;
+  -webkit-animation-fill-mode: forwards;
+          animation-fill-mode: forwards;
+}
+@-webkit-keyframes pencil-right {
+  from {
+    top: 5%;
+    left: 120%;
+  }
+  to {
+    top: 25%;
+    left: -10%;
+  }
+}
+@keyframes pencil-right {
+  from {
+    top: 5%;
+    left: 120%;
+  }
+  to {
+    top: 25%;
+    left: -10%;
+  }
+}
+.hero__icons--right .icon-pencil {
+  transform: rotate(-90deg);
+  -webkit-animation: pencil-right 3s;
+          animation: pencil-right 3s;
+  -webkit-animation-fill-mode: forwards;
+          animation-fill-mode: forwards;
+}
+@-webkit-keyframes tag-right {
+  from {
+    top: 10%;
+    left: 120%;
+  }
+  to {
+    top: 35%;
+    left: 40%;
+  }
+}
+@keyframes tag-right {
+  from {
+    top: 10%;
+    left: 120%;
+  }
+  to {
+    top: 35%;
+    left: 40%;
+  }
+}
+.hero__icons--right .icon-tag {
+  transform: rotate(30deg);
+  -webkit-animation: tag-right 3s;
+          animation: tag-right 3s;
+  -webkit-animation-fill-mode: forwards;
+          animation-fill-mode: forwards;
+}
+@-webkit-keyframes table-right {
+  from {
+    top: 30%;
+    left: 120%;
+  }
+  to {
+    top: 50%;
+    left: 20%;
+  }
+}
+@keyframes table-right {
+  from {
+    top: 30%;
+    left: 120%;
+  }
+  to {
+    top: 50%;
+    left: 20%;
+  }
+}
+.hero__icons--right .icon-table {
+  transform: rotate(13deg);
+  -webkit-animation: table-right 3s;
+          animation: table-right 3s;
+  -webkit-animation-fill-mode: forwards;
+          animation-fill-mode: forwards;
+}
+@-webkit-keyframes calculator-right {
+  from {
+    top: 10%;
+    left: 120%;
+  }
+  to {
+    top: 25%;
+    left: 65%;
+  }
+}
+@keyframes calculator-right {
+  from {
+    top: 10%;
+    left: 120%;
+  }
+  to {
+    top: 25%;
+    left: 65%;
+  }
+}
+.hero__icons--right .icon-calculator {
+  transform: rotate(15deg);
+  -webkit-animation: calculator-right 3s;
+          animation: calculator-right 3s;
+  -webkit-animation-fill-mode: forwards;
+          animation-fill-mode: forwards;
+}
+@-webkit-keyframes ruler-right {
+  from {
+    top: 80%;
+    left: 120%;
+  }
+  to {
+    top: 70%;
+    left: -5%;
+  }
+}
+@keyframes ruler-right {
+  from {
+    top: 80%;
+    left: 120%;
+  }
+  to {
+    top: 70%;
+    left: -5%;
+  }
+}
+.hero__icons--right .icon-ruler {
+  -webkit-animation: ruler-right 3s;
+          animation: ruler-right 3s;
+  -webkit-animation-fill-mode: forwards;
+          animation-fill-mode: forwards;
+}
+@-webkit-keyframes folder-right {
+  from {
+    top: 90%;
+    left: 120%;
+  }
+  to {
+    top: 85%;
+    left: 40%;
+  }
+}
+@keyframes folder-right {
+  from {
+    top: 90%;
+    left: 120%;
+  }
+  to {
+    top: 85%;
+    left: 40%;
+  }
+}
+.hero__icons--right .icon-folder {
+  -webkit-animation: folder-right 3s;
+          animation: folder-right 3s;
+  -webkit-animation-fill-mode: forwards;
+          animation-fill-mode: forwards;
+}
+@-webkit-keyframes card-right {
+  from {
+    top: 65%;
+    left: 120%;
+  }
+  to {
+    top: 60%;
+    left: 70%;
+  }
+}
+@keyframes card-right {
+  from {
+    top: 65%;
+    left: 120%;
+  }
+  to {
+    top: 60%;
+    left: 70%;
+  }
+}
+.hero__icons--right .icon-card {
+  -webkit-animation: card-right 3s;
+          animation: card-right 3s;
+  -webkit-animation-fill-mode: forwards;
+          animation-fill-mode: forwards;
+  transform: rotate(15deg);
+}
+.hero__content {
+  grid-area: content;
   width: 100%;
   padding: 20px;
   display: flex;
   flex-direction: column;
   align-items: center;
+  text-align: center;
 }
-.hero__logo {
-  padding-top: 50px;
-  padding-bottom: 20px;
+.hero__content-logo {
+  padding-top: 40px;
+  padding-bottom: 30px;
   width: 80px;
   height: auto;
 }
-.hero__title {
-  font-size: 50px;
-  padding-bottom: 50px;
+@media screen and (min-width: 1920px) {
+  .hero__content-logo {
+    width: 130px;
+    padding-bottom: 50px;
+  }
 }
-.hero__button {
+.hero__content-title {
+  font-size: 60px;
+  padding-bottom: 25px;
+}
+@media screen and (min-width: 1920px) {
+  .hero__content-title {
+    font-size: 90px;
+    padding-bottom: 40px;
+  }
+}
+.hero__content-subtitle {
+  padding-bottom: 70px;
+}
+@media screen and (min-width: 1920px) {
+  .hero__content-subtitle {
+    font-size: 36px;
+    padding-bottom: 100px;
+  }
+}
+.hero__content-button {
   width: 120px;
   height: 50px;
   font-weight: semi-bold;
   font-size: 24px;
 }
-
-.value-prop {
-  padding: 70px 20px;
+@media screen and (min-width: 1920px) {
+  .hero__content-button {
+    width: 150px;
+    height: 70px;
+    font-size: 36px;
+  }
 }
 
 .welcome {
+  margin: 0 30px;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -576,7 +1067,7 @@ td {
 .table-object__data:hover, .table-material__data:hover, .table-extra__data:hover {
   background-color: #f8f9fae1;
 }
-.table-object__extra, .table-object__item, .table-material__extra, .table-material__item, .table-extra__extra, .table-extra__item, .table-extra__description {
+.table-object__extra, .table-object__item, .table-material__extra, .table-material__item, .table-extra__extra, .table-extra__item {
   text-align: left;
 }
 .table-object__item, .table-material__item, .table-extra__item {
