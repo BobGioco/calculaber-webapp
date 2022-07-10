@@ -109,9 +109,9 @@
     html_txt="<tr class='table-object__data' id=" + id + ">"
     html_txt+="<td class='table-object__item name'>"+ name + "</td>"
     if(units[units_id]==="m2"){
-      html_txt+="<td class='table-object__amount amount'>" + FormatNumber(amount) + "m<sup>2</sup></td>";
+      html_txt+="<td class='table-object__amount amount'>" + FormatNumber(amount) + " " + "m<sup>2</sup></td>";
     }else if (units[units_id]==="m3") {
-      html_txt+="<td class='table-object__amount amount'>" + FormatNumber(amount) + "m<sup>3</sup></td>";
+      html_txt+="<td class='table-object__amount amount'>" + FormatNumber(amount) + " " + "m<sup>3</sup></td>";
     }else {
       html_txt+="<td class='table-object__amount amount'>" + FormatNumber(amount) + " " + units[units_id] + "</td>";
     };

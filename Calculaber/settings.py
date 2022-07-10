@@ -14,7 +14,7 @@ from pathlib import Path
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
-TEMPLATE_DIR= path.join(BASE_DIR,'calculaber_app/templates/calculaber_app')
+TEMPLATE_DIR = path.join(BASE_DIR, 'calculaber_app/templates/calculaber_app')
 
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/3.2/howto/deployment/checklist/
@@ -24,8 +24,8 @@ SECRET_KEY = 'django-insecure-m91#u#6tn01ehf7+rhu687_-xdwgj_q8wb6j__)zce0b1(=qxu
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
-ALLOWED_HOSTS=[]
-#ALLOWED_HOSTS = ["LockeArkady.pythonanywhere.com"]
+ALLOWED_HOSTS = []
+# ALLOWED_HOSTS = ["LockeArkady.pythonanywhere.com"]
 
 
 # Application definition
@@ -56,7 +56,7 @@ ROOT_URLCONF = 'Calculaber.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [TEMPLATE_DIR,],
+        'DIRS': [TEMPLATE_DIR, ],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
@@ -71,7 +71,6 @@ TEMPLATES = [
 
 WSGI_APPLICATION = 'Calculaber.wsgi.application'
 
-
 # Database
 # https://docs.djangoproject.com/en/3.2/ref/settings/#databases
 
@@ -82,11 +81,10 @@ DATABASES = {
     }
 }
 
-
 # Password validation
 # https://docs.djangoproject.com/en/3.2/ref/settings/#auth-password-validators
 
-PASSWORD_HASHERS= [
+PASSWORD_HASHERS = [
     'django.contrib.auth.hashers.Argon2PasswordHasher',
     'django.contrib.auth.hashers.BCryptSHA256PasswordHasher',
     'django.contrib.auth.hashers.BCryptPasswordHasher',
@@ -109,7 +107,6 @@ AUTH_PASSWORD_VALIDATORS = [
     },
 ]
 
-
 # Internationalization
 # https://docs.djangoproject.com/en/3.2/topics/i18n/
 
@@ -117,32 +114,34 @@ LANGUAGE_CODE = 'cs-cz'
 
 TIME_ZONE = 'CET'
 
-USE_I18N = False #True
+USE_I18N = False  # True
 
-USE_L10N = False #True
+USE_L10N = False  # True
 
 USE_TZ = True
 
-#USE_THOUSAND_SEPARATOR = False
-#DECIMAL_SEPARATOR = ','
-#THOUSAND_SEPARATOR = '.' #'.'
+# USE_THOUSAND_SEPARATOR = False
+# DECIMAL_SEPARATOR = ','
+# THOUSAND_SEPARATOR = '.' #'.'
 
 
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/3.2/howto/static-files/
 
-#STATIC_ROOT = path.join(BASE_DIR, 'static/')
-STATIC_ROOT='/static/'
+# STATIC_ROOT = path.join(BASE_DIR, 'static/')
+STATIC_ROOT = '/static/'
 STATIC_URL = '/static/'
 
-STATICFILES_DIRS = (
-    path.join(BASE_DIR, "static"),
-)
+STATICFILES_DIRS = [
+    path.join(BASE_DIR, 'calculaber_app', "static")
+]
 
-MEDIA_ROOT=path.join(BASE_DIR,'media/')
-MEDIA_URL='/media/'
+MEDIA_ROOT = path.join(BASE_DIR, 'media/')
+MEDIA_URL = '/media/'
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/3.2/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+
+print(f"{BASE_DIR}")

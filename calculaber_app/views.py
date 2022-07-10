@@ -9,6 +9,9 @@ from django.db.models import Sum,F,Case,When,DecimalField
 from django.core.serializers.json import DjangoJSONEncoder
 import json
 
+def is_ajax(request):
+    return request.META.get('HTTP_X_REQUESTED_WITH') == 'XMLHttpRequest'
+
 def index(request):
     if request.user.is_authenticated:
         if request.method=="POST":
@@ -72,7 +75,7 @@ class ProjectDetailView(LoginRequiredMixin,ListView):
         return json.dumps(list(final_set.values('id','name','create_date','object_price')), cls=DjangoJSONEncoder)
 
     def post(self, request, *args, **kwargs):
-        if request.is_ajax():
+        if is_ajax(request=request):
             if request.POST.get('type')=="new":
                 instance = models.Object()
                 instance.name=request.POST.get("name")
@@ -158,7 +161,7 @@ class MaterialListView(LoginRequiredMixin,ListView):
         return context
 
     def post(self, request, *args, **kwargs):
-        if request.is_ajax():
+        if is_ajax(request=request):
             if request.POST.get('type')=="delete":
                 instance = models.Material.objects.get(id=request.POST.get('item_id'),user=self.request.user)
                 instance.delete()
@@ -249,7 +252,7 @@ class ObjectDetailView(LoginRequiredMixin,ListView):
         return context
 
     def post(self, request, *args, **kwargs):
-        if request.is_ajax():
+        if is_ajax(request=request):
             if request.POST.get('type')=="delete":
                 instance = models.MaterialObject.objects.get(id=request.POST.get('item_id'),user=self.request.user)
                 instance.delete()
@@ -375,7 +378,7 @@ class ExtraExpenseDetailView(LoginRequiredMixin,ListView):
         return context
 
     def post(self, request, *args, **kwargs):
-        if request.is_ajax():
+        if is_ajax(request=request):
             if request.POST.get('type')=="delete":
                 instance = models.ExtraExpense.objects.get(id=request.POST.get('item_id'),user=self.request.user)
                 instance.delete()

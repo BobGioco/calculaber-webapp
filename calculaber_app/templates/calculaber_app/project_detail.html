@@ -4,7 +4,7 @@
 <main>
 <div class="path">
     <a href="{% url 'calculaber_app:index' %}" class="path__link">Projekty</a>
-    <p class="path__slash"> \ </p>
+    <p class="path__slash"> / </p>
     <a href="{% url 'project_detail'  pk=project.id %}" class="path__link path__link--active">{{ project.name }}</a>
 </div>
 
