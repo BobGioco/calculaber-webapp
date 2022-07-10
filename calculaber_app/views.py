@@ -40,8 +40,8 @@ class ProjectDetailView(LoginRequiredMixin,ListView):
     model=models.Object
 
     def calculate_object_price(self,user_id,project_id,object_id=None):
-        not_customized=Sum(F('materialobject__material__price')*F('materialobject__amount'))
-        customized=Sum(F('materialobject__price')*F('materialobject__amount'))
+        not_customized=Sum((F('materialobject__material__price')*(100+F('materialobject__material__margin')))/100*F('materialobject__amount'))#Sum((F('materialobject__material__price')*(1+F('materialobject__material__margin')/100))*F('materialobject__amount'))
+        customized=Sum((F('materialobject__price')*(100+F('materialobject__margin')))/100*F('materialobject__amount'))
         if object_id is None:
             selected_objects=models.Object.objects.filter(user=user_id,project=project_id).select_related()
         else:

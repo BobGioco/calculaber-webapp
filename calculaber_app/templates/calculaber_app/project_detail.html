@@ -124,7 +124,7 @@
   document.addEventListener("DOMContentLoaded", function() {
       var container = document.getElementById("object-cards");
       if (objects.length>0) {
-        total_price+=objects.map(item => item.object_price).reduce((prev, next) => Number(prev) + Number(next))
+        total_price+=objects.map(item => Number(item.object_price)).reduce((prev, next) => prev + next)
       }
       if (extra_expense.length>0) {
         total_price+=extra_expense.map(item => Number(item.price)).reduce((prev, next) => prev + next)
@@ -132,7 +132,7 @@
       $("span.total_price")[0].innerHTML=FormatNumber(total_price);
       //table.innerHTML="";
       var tr="";
-      //console.log(container);
+      //console.log(objects);
       objects.forEach(x=>{
          tr+=GenerateObjectCard(x.id,x.name,x.object_price,x.create_date);
       });
